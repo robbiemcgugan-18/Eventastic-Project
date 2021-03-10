@@ -1,0 +1,24 @@
+.logo {
+    height: 6rem;
+    background-color: #f0f0f0;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+main {
+    background-color: #56CCF2;
+}
+
+#content-wrap {
+  padding-bottom: 5rem;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 5rem;
+}

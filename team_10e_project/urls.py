@@ -19,6 +19,6 @@ from team_10e_app import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('team-10e-app/', include('team_10e_app.urls')),
+    path('team_10e_app/', include('team_10e_app.urls')),
     path('admin/', admin.site.urls),
 ]

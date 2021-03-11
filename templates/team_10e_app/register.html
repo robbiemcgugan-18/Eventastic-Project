@@ -1,0 +1,26 @@
+{% extends 'team_10e_app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block body_block %}
+    <h1>Register for Eventastic</h1>
+
+    {% if registered %}
+        <strong>Thank you for registering with Eventastic!</strong>
+        <button type="button" onclick="document.location='{% url 'team_10e_app:index' %}'" class="btn btn-info px-3 m-1">Return to Homepage</button>
+
+    {% else %}
+        <form id="user_form" method="post" action="{% url 'team_10e_app:register' %}" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+
+            <input type="submit" name="submit" value="Register" />
+        </form>
+    {% endif %}
+{% endblock %}

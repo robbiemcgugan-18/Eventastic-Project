@@ -1,0 +1,19 @@
+{% extends 'team_10e_app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Login
+{% endblock %}
+
+{% block body_block %}
+    <h1>Login</h1>
+
+    <form id="login_form" method="post" action="{% url 'team_10e_app:login' %}">
+        {% csrf_token %}
+        Username: <input type="text" name="username" value="" size="50" />
+        <br />
+        Password: <input type="password" name="password" value="" size="50" />
+        <br />
+        <input type="submit" value="submit" />
+    </form>
+{% endblock %}

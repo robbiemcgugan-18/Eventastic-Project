@@ -46,11 +46,14 @@ class Attend(models.Model):
     class Meta:
         UniqueConstraint(fields=['eventName', 'username'], name='userAttends')
 
+    def __str__(self):
+        return f"{self.username} {self.eventName}"
+
 class Comment(models.Model):
     eventName = models.ForeignKey(Event, on_delete=models.CASCADE)
     username = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     posted = models.DateTimeField(default=timezone.now())
     comment = models.CharField(max_length=100)
 
-    class Meta:
-        UniqueConstraint(fields=['eventName', 'username', 'posted'], name='userComment')
+    def __str__(self):
+        return f"{self.username} {self.eventName} {self.posted}"

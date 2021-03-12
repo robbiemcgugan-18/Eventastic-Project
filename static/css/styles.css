@@ -1,15 +1,11 @@
-.logo {
-    height: 6rem;
-    background-color: #f0f0f0;
-}
-
 body {
   position: relative;
   min-height: 100vh;
+  background-color: #56CCF2;
 }
 
-main {
-    background-color: #56CCF2;
+header {
+    background-color: #ffffff;
 }
 
 .home-container {

@@ -14,6 +14,7 @@ class Category(models.Model):
     def __str__(self):
         return self.categoryName
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -52,7 +53,7 @@ class Attend(models.Model):
 class Comment(models.Model):
     eventName = models.ForeignKey(Event, on_delete=models.CASCADE)
     username = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    posted = models.DateTimeField(default=timezone.now())
+    posted = models.DateTimeField(auto_now_add=True)
     comment = models.CharField(max_length=100)
 
     def __str__(self):

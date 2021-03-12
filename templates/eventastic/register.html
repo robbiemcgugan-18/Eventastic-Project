@@ -1,4 +1,4 @@
-{% extends 'team_10e_app/base.html' %}
+{% extends 'eventastic/base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -10,10 +10,10 @@
 
     {% if registered %}
         <strong>Thank you for registering with Eventastic!</strong>
-        <button type="button" onclick="document.location='{% url 'team_10e_app:index' %}'" class="btn btn-info px-3 m-1">Return to Homepage</button>
+        <button type="button" onclick="document.location='{% url 'eventastic:index' %}'" class="btn btn-info px-3 m-1">Return to Homepage</button>
 
     {% else %}
-        <form id="user_form" method="post" action="{% url 'team_10e_app:register' %}" enctype="multipart/form-data">
+        <form id="user_form" method="post" action="{% url 'eventastic:register' %}" enctype="multipart/form-data">
 
             {% csrf_token %}
 

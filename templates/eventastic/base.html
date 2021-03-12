@@ -29,7 +29,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item px-5">
-                            <a class="nav-link" href="{% url 'team_10e_app:index' %}">Home</a>
+                            <a class="nav-link" href="{% url 'eventastic:index' %}">Home</a>
                         </li>
                         <li class="nav-item px-5">
                             <a class="nav-link" href="#">Categories</a>
@@ -49,12 +49,12 @@
                     </ul>
                 </div>
 
-                {% url 'team_10e_app:register' as register_url %}
-                {% url 'team_10e_app:login' as login_url %}
+                {% url 'eventastic:register' as register_url %}
+                {% url 'eventastic:login' as login_url %}
 
                     <span>
                         {% if user.is_authenticated %}
-                            <button type="button" onclick="document.location='{% url 'team_10e_app:logout' %}'" class="btn btn-info px-3 m-1">Logout</button>
+                            <button type="button" onclick="document.location='{% url 'eventastic:logout' %}'" class="btn btn-info px-3 m-1">Logout</button>
 
                         {% elif request.path != register_url and request.path != login_url %}
                             <button type="button" onclick="document.location='{{ login_url }}'" class="btn btn-info px-3 m-1">Login</button>

@@ -10,7 +10,7 @@
     <link href="../../static/css/styles.css" rel="stylesheet">
 
     <title>
-      Team 10e App -
+      Eventastic -
       {% block title_block %}
         Default
       {% endblock %}
@@ -18,58 +18,58 @@
   </head>
 
   <body>
-    <div id="content-wrap">
-        <header>
-            <img class="d-inline px-2 py-2" src="{% static 'images/logo.png' %}" style="height: 7rem;"/>
-        </header>
+    <header>
+        <img class="d-inline px-2 py-2" src="{% static 'images/logo.png' %}" style="height: 7rem;"/>
+    </header>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand d-lg-none">Navigation</a>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item px-5">
-                            <a class="nav-link" href="{% url 'eventastic:index' %}">Home</a>
-                        </li>
-                        <li class="nav-item px-5">
-                            <a class="nav-link" href="#">Categories</a>
-                        </li>
-                        <li class="nav-item px-5">
-                            <a class="nav-link" href="#">Create Category</a>
-                        </li>
-                        <li class="nav-item px-5">
-                            <a class="nav-link" href="#">Create Event</a>
-                        </li>
-                        <li class="nav-item px-5">
-                            <a class="nav-link" href="#">Find Users</a>
-                        </li>
-                        <li class="nav-item px-5">
-                            <a class="nav-link" href="#">Contact Us</a>
-                        </li>
-                    </ul>
-                </div>
-
-                {% url 'eventastic:register' as register_url %}
-                {% url 'eventastic:login' as login_url %}
-
-                    <span>
-                        {% if user.is_authenticated %}
-                            <button type="button" onclick="document.location='{% url 'eventastic:logout' %}'" class="btn btn-info px-3 m-1">Logout</button>
-
-                        {% elif request.path != register_url and request.path != login_url %}
-                            <button type="button" onclick="document.location='{{ login_url }}'" class="btn btn-info px-3 m-1">Login</button>
-                            <span>or</span>
-                            <button type="button" onclick="document.location='{{ register_url }}'" class="btn btn-info px-3 m-1">Register</button>
-
-                        {% endif %}
-                    <span>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand d-lg-none">Navigation</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item px-5">
+                        <a class="nav-link" href="{% url 'eventastic:index' %}">Home</a>
+                    </li>
+                    <li class="nav-item px-5">
+                        <a class="nav-link" href="#">Categories</a>
+                    </li>
+                    <li class="nav-item px-5">
+                        <a class="nav-link" href="{% url 'eventastic:create_category' %}">Create Category</a>
+                    </li>
+                    <li class="nav-item px-5">
+                        <a class="nav-link" href="#">Create Event</a>
+                    </li>
+                    <li class="nav-item px-5">
+                        <a class="nav-link" href="#">Find Users</a>
+                    </li>
+                    <li class="nav-item px-5">
+                        <a class="nav-link" href="#">Contact Us</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
 
+            {% url 'eventastic:register' as register_url %}
+            {% url 'eventastic:login' as login_url %}
+
+                <span>
+                    {% if user.is_authenticated %}
+                        <button type="button" onclick="document.location='{% url 'eventastic:logout' %}'" class="btn btn-info px-3 m-1">Logout</button>
+
+                    {% elif request.path != register_url and request.path != login_url %}
+                        <button type="button" onclick="document.location='{{ login_url }}'" class="btn btn-info px-3 m-1">Login</button>
+                        <span>or</span>
+                        <button type="button" onclick="document.location='{{ register_url }}'" class="btn btn-info px-3 m-1">Register</button>
+
+                    {% endif %}
+                <span>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="content-wrap">
         <main class="text-center">
             {% block body_block %}
             {% endblock %}

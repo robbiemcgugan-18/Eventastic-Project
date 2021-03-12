@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from eventastic.forms import UserForm, UserProfileForm
+from eventastic.forms import UserForm, UserProfileForm, CategoryForm
 from django.contrib.auth import authenticate, logout
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from eventastic.models import Category, Event
 
 def index(request):
 
@@ -73,3 +74,43 @@ def user_logout(request):
     logout(request)
 
     return redirect(reverse('eventastic:index'))
+
+def show_category(request, category_name_slug):
+
+    context_dict = {}
+
+    try:
+        category = Category.objects.get(slug=category_name_slug)
+
+        events = Event.objects.filter(category=category)
+
+        context_dict['events'] = events
+        context_dict['category'] = category
+
+    except Category.DoesNotExist:
+        context_dict['category'] = None
+        context_dict['events'] = None
+
+    return render(request, 'eventastic/show_category.html', context=context_dict)
+
+def create_category(request):
+
+    form = CategoryForm()
+
+    print(request.method)
+
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+
+        print("good")
+
+        if form.is_valid():
+            form.save(commit=True)
+
+            return redirect('eventastic:index')
+
+        else:
+            print(form.errors)
+
+    else:
+        return render(request, 'eventastic/create_category.html', {'form': form})

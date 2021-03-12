@@ -2,11 +2,17 @@ from django.db import models
 from django.db.models import UniqueConstraint
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 class Category(models.Model):
     categoryName = models.CharField(max_length=30, unique=True)
-    categoryPicture = models.ImageField()
     categoryDescription = models.CharField(max_length=200)
+    categoryPicture = models.ImageField()
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.categoryName)
+        super(Category, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Categories'

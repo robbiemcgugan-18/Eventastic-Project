@@ -1,7 +1,6 @@
 body {
   position: relative;
   min-height: 100vh;
-  background-color: #56CCF2;
 }
 
 header {
@@ -13,6 +12,7 @@ header {
 }
 
 #content-wrap {
+  background-color: #56CCF2;
   padding-bottom: 5rem;
 }
 

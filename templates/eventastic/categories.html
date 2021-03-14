@@ -1,0 +1,12 @@
+{% extends 'eventastic/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+  Categories
+{% endblock %}
+
+{% block body_block %}
+  {% for category in categories %}
+  <p>{{ category.categoryName }}</p>
+  {% endfor %}
+{% endblock %}

@@ -93,24 +93,32 @@ def show_category(request, category_name_slug):
 
     return render(request, 'eventastic/show_category.html', context=context_dict)
 
+@login_required
 def create_category(request):
 
     form = CategoryForm()
 
-    print(request.method)
-
     if request.method == 'POST':
         form = CategoryForm(request.POST)
 
-        print("good")
-
         if form.is_valid():
-            form.save(commit=True)
+            form_data = form.save(commit=True)
 
-            return redirect('eventastic:index')
+            category_name_slug = form_data.slug
+            return redirect('eventastic:show_category', category_name_slug=category_name_slug)
 
         else:
             print(form.errors)
 
     else:
         return render(request, 'eventastic/create_category.html', {'form': form})
+
+def categories(request):
+
+    context_dict = {}
+
+    categories = Category.objects.order_by('categoryName')
+
+    context_dict['categories'] = categories
+
+    return render(request, 'eventastic/categories.html', context=context_dict)

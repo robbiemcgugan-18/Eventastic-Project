@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from eventastic.forms import UserForm, UserProfileForm, CategoryForm
-from django.contrib.auth import authenticate, logout
+from eventastic.forms import UserForm, UserProfileForm, CategoryForm, EventForm
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from eventastic.models import Category, Event
+from eventastic.models import Category, Event, UserProfile
+from django.contrib.auth.models import User
 
 def index(request):
 
@@ -111,7 +112,47 @@ def create_category(request):
             print(form.errors)
 
     else:
-        return render(request, 'eventastic/create_category.html', {'form': form})
+        return render(request, 'eventastic/create_category.html', context={'form': form})
+
+def show_event(request, category_name_slug, event_name_slug):
+
+    context_dict = {}
+
+    try:
+        event = Event.objects.get(slug=event_name_slug)
+
+        context_dict['event'] = event
+
+    except Event.DoesNotExist:
+        context_dict['event'] = None
+
+    return render(request, 'eventastic/show_event.html', context=context_dict)
+
+@login_required
+def create_event(request):
+
+    form = EventForm()
+
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+
+        if form.is_valid():
+            form.instance.createdBy = UserProfile.objects.get(user=request.user)
+
+            form_data = form.save(commit=True)
+
+            event_name_slug = form_data.slug
+
+            category_obj = Category.objects.get(name=form_data.category)
+            category_name_slug = category_obj.slug
+
+            return redirect('eventastic:show_event', category_name_slug=category_name_slug, event_name_slug=event_name_slug)
+
+        else:
+            print(form.errors)
+
+    else:
+        return render(request, 'eventastic/create_event.html', context={'form': form})
 
 def categories(request):
 

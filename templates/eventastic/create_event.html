@@ -2,14 +2,15 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  Create Category
+  Create Event
 {% endblock %}
 
 {% block body_block %}
-  <h1>Add a Category</h1>
+  <h1>Create an Event</h1>
+  <h2>{{ request.user }}</h2>
 
   <div>
-    <form id="category_form" method="post" action="{% url 'eventastic:create_category' %}">
+    <form id="category_form" method="post" action="{% url 'eventastic:create_event' %}">
       {% csrf_token %}
 
       {{ form.as_p }}

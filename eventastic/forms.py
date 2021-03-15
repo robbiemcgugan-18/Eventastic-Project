@@ -16,11 +16,11 @@ class UserProfileForm(forms.ModelForm):
         fields = ('DOB', 'profilePicture')
 
 class CategoryForm(forms.ModelForm):
-    categoryName = forms.CharField(max_length=30)
-    categoryDescription = forms.CharField(max_length=200)
-    categoryPicture = forms.ImageField(required=False)
+    name = forms.CharField(max_length=30)
+    description = forms.CharField(max_length=200)
+    picture = forms.ImageField(required=False)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Category
-        fields = ('categoryName', 'categoryDescription', 'categoryPicture')
+        fields = ('name', 'description', 'picture')

@@ -117,7 +117,7 @@ def categories(request):
 
     context_dict = {}
 
-    categories = Category.objects.order_by('categoryName')
+    categories = Category.objects.order_by('name')
 
     context_dict['categories'] = categories
 

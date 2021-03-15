@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
 class Category(models.Model):
-    categoryName = models.CharField(max_length=30, unique=True)
-    categoryDescription = models.CharField(max_length=200)
-    categoryPicture = models.ImageField()
+    name = models.CharField(max_length=30, unique=True)
+    description = models.CharField(max_length=200)
+    picture = models.ImageField()
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.categoryName)
+        self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
 
     class Meta:
@@ -31,11 +31,11 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Event(models.Model):
-    eventName = models.CharField(max_length=30, unique=True)
-    eventDescription = models.CharField(max_length=200)
+    name = models.CharField(max_length=30, unique=True)
+    description = models.CharField(max_length=200)
     start = models.DateTimeField()
     numberInterested = models.IntegerField()
-    eventPicture = models.ImageField()
+    picture = models.ImageField()
     address = models.CharField(max_length=40)
     postcode = models.CharField(max_length=8)
     averageRating = models.DecimalField(max_digits=3, decimal_places=2)
@@ -46,7 +46,7 @@ class Event(models.Model):
         return self.eventName
 
 class Attend(models.Model):
-    eventName = models.ForeignKey(Event, on_delete=models.CASCADE)
+    name = models.ForeignKey(Event, on_delete=models.CASCADE)
     username = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
 
@@ -57,7 +57,7 @@ class Attend(models.Model):
         return f"{self.username} {self.eventName}"
 
 class Comment(models.Model):
-    eventName = models.ForeignKey(Event, on_delete=models.CASCADE)
+    name = models.ForeignKey(Event, on_delete=models.CASCADE)
     username = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     posted = models.DateTimeField(auto_now_add=True)
     comment = models.CharField(max_length=100)

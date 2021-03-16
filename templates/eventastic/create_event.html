@@ -7,8 +7,6 @@
 
 {% block body_block %}
   <h1>Create an Event</h1>
-  <h2>{{ request.user }}</h2>
-
   <div>
     <form id="category_form" method="post" action="{% url 'eventastic:create_event' %}">
       {% csrf_token %}

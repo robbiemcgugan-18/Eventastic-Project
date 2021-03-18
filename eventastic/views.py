@@ -24,23 +24,27 @@ def register(request):
         # if the form information is valid then the information will be saved
         if user_form.is_valid() and profile_form.is_valid():
             # Save the User form information in the database
-            user = user_form.save(commit=True)
+            user = user_form.save()
 
             # Hash the saved password and resave it
             user.set_password(user.password)
-            user.save(commit=True)
+            user.save()
 
             # Save the User Profile form information in the database
             profile = profile_form.save(commit=False)
             profile.user = user
 
-            if 'picture' in request.FILES:
-                profile.profilePicture = request.FILES['picture']
+            if 'profilePicture' in request.FILES:
+                profile.profilePicture = request.FILES['profilePicture']
 
             profile.save()
 
             # The user has now registered an account so registered is True
             registered = True
+
+            new_user = authenticate(username=request.POST['username'], password=request.POST['password'])
+
+            login(request, new_user)
 
             # Redirect the user to the home page
             return redirect(reverse('eventastic:index'))

@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 class Category(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=200)
-    picture = models.ImageField()
+    picture = models.ImageField(upload_to='category_images/')
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -25,7 +25,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     DOB = models.DateField()
-    profilePicture = models.ImageField(null=True,blank=True)
+    profilePicture = models.ImageField(upload_to='profile_images/', blank=True)
 
     def __str__(self):
         return self.user.username
@@ -35,7 +35,7 @@ class Event(models.Model):
     description = models.CharField(max_length=200)
     start = models.DateField(default=None)
     numberInterested = models.IntegerField(default=0)
-    picture = models.ImageField(null=True,blank=True)
+    picture = models.ImageField(upload_to='event_images/',null=True,blank=True)
     address = models.CharField(max_length=40)
     postcode = models.CharField(max_length=8)
     averageRating = models.DecimalField(max_digits=3, decimal_places=2,default=0)

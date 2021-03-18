@@ -1,24 +1,29 @@
 body {
   position: relative;
   min-height: 100vh;
-}
-
-header {
-    background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
 }
 
 .home-container {
     vertical-align: top;
 }
 
-#content-wrap {
+/** main {
   background-color: #56CCF2;
   padding-bottom: 5rem;
-}
+} */
 
 #footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 5rem;
+}
+
+.button-custom {
+  background-color: #caebf2;
+}
+
+.button-custom:hover {
+  background-color: #efefef;
 }

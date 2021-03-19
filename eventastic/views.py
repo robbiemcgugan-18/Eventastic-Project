@@ -42,7 +42,7 @@ def register(request):
             # The user has now registered an account so registered is True
             registered = True
 
-            new_user = authenticate(username=request.POST['username'], password=request.POST['password'])
+            new_user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
 
             login(request, new_user)
 

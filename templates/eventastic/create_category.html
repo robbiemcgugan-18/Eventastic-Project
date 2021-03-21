@@ -9,7 +9,7 @@
   <h1>Add a Category</h1>
 
   <div>
-    <form id="category_form" method="post" action="{% url 'eventastic:create_category' %}">
+    <form id="category_form" method="post" action="{% url 'eventastic:create_category' %}" enctype="multipart/form-data">
       {% csrf_token %}
 
       {{ form.as_p }}

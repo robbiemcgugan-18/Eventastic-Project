@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
 class Category(models.Model):
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=30, primary_key=True)
     description = models.CharField(max_length=200)
-    picture = models.ImageField(upload_to='category_images/')
+    picture = models.ImageField(upload_to='category_images/', blank=True)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -22,7 +22,7 @@ class Category(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     DOB = models.DateField()
     profilePicture = models.ImageField(upload_to='profile_images/', blank=True)
@@ -31,11 +31,11 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Event(models.Model):
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=30, primary_key=True)
     description = models.CharField(max_length=200)
     start = models.DateField(default=None)
     numberInterested = models.IntegerField(default=0)
-    picture = models.ImageField(upload_to='event_images/',null=True,blank=True)
+    picture = models.ImageField(upload_to='event_images/', blank=True)
     address = models.CharField(max_length=40)
     postcode = models.CharField(max_length=8)
     averageRating = models.DecimalField(max_digits=3, decimal_places=2,default=0)
@@ -49,6 +49,7 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Attend(models.Model):
     name = models.ForeignKey(Event, on_delete=models.CASCADE)

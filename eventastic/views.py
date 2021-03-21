@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
-from eventastic.forms import UserForm, UserProfileForm, CategoryForm, EventForm
-from django.contrib.auth import authenticate, login, logout
+from eventastic.forms import UserForm, UserProfileForm, CategoryForm, EventForm, EditUserForm, EditProfileForm, DeleteUserForm
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from eventastic.models import Category, Event, UserProfile
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
 
 def index(request):
 
@@ -51,15 +53,15 @@ def register(request):
 
         # If the form information is not valid then print the errors
         else:
-            print(user_form.errors, profile_form.errors)
+            messages.error(request, "Form is invalid")
 
     # If the form has not been submitted display the form onscreen
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-        # Render the view onscreen using the given context
-        return render(request, 'eventastic/register.html', context = {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    # Render the view onscreen using the given context
+    return render(request, 'eventastic/register.html', context = {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 
 def user_login(request):
@@ -138,9 +140,16 @@ def create_category(request):
         # Get the data from the form
         form = CategoryForm(request.POST)
 
+        print(request.FILES)
+
         # If the form information is valid then save the information in the database
         if form.is_valid():
-            form_data = form.save(commit=True)
+            form_data = form.save(commit=False)
+
+            if 'picture' in request.FILES:
+                form_data.picture = request.FILES['picture']
+
+            form_data.save()
 
             # Get the slug for the created category
             category_name_slug = form_data.slug
@@ -188,7 +197,12 @@ def create_event(request):
             # Set the createdBy field to the user that is currently logged in
             form.instance.createdBy = UserProfile.objects.get(user=request.user)
             # Save the form data to the database
-            form_data = form.save(commit=True)
+            form_data = form.save(commit=False)
+
+            if 'picture' in request.FILES:
+                form_data.picture = request.FILES['picture']
+
+            form_data.save()
 
             # Ge the slug for the created event
             event_name_slug = form_data.slug
@@ -218,3 +232,86 @@ def categories(request):
 
     # Render the view onscreen using the given context
     return render(request, 'eventastic/categories.html', context=context_dict)
+
+def account(request):
+    context_dict = {}
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('eventastic:account')
+
+        else:
+            messages.error(request, "Form is invalid")
+
+    else:
+        form = PasswordChangeForm(request.user)
+
+    context_dict['form'] = form
+
+    user_profile = UserProfile.objects.get(user=request.user.id)
+    organised_events = Event.objects.filter(createdBy=user_profile)
+
+    context_dict['user_profile'] = user_profile
+    context_dict['organised_events'] = organised_events
+
+    return render(request, 'eventastic/account.html', context=context_dict)
+
+def edit_account(request):
+    context_dict = {}
+    user_profile = UserProfile.objects.get(user=request.user.id)
+
+    if request.method == 'POST':
+        user_form = EditUserForm(request.POST, instance=request.user)
+        profile_form = EditProfileForm(request.POST, instance=user_profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile = profile_form.save(commit=False)
+
+            if 'profilePicture' in request.FILES:
+                profile.profilePicture = request.FILES['profilePicture']
+
+            profile.save()
+
+            return redirect('eventastic:account')
+
+    else:
+        user_form = EditUserForm(request.POST, instance=request.user)
+        profile_form = EditProfileForm(request.POST, instance=user_profile)
+
+        context_dict['user_form'] = user_form
+        context_dict['profile_form'] = profile_form
+
+        return render(request, 'eventastic/edit_account.html', context=context_dict)
+
+def delete_account(request):
+    context_dict = {}
+
+    if request.method == 'POST':
+        form = DeleteUserForm(request.POST)
+
+        user = authenticate(username=request.user, password=form.data['password'])
+
+        if user:
+            if user.is_active:
+                user_to_delete = User.objects.get(username=request.user)
+                user_to_delete.delete()
+
+                return redirect('eventastic:index')
+
+            else:
+                messages.error(request, "Account is Disabled")
+
+        else:
+            messages.error(request, "Invalid Form")
+    else:
+        form = DeleteUserForm(request.POST)
+
+
+    context_dict['form'] = form
+
+    return render(request, 'eventastic/delete_account.html', context=context_dict)

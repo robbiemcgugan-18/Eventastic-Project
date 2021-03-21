@@ -33,6 +33,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["robbiemcgugan.pythonanywhere.com", "127.0.0.1"]
 
+LOGIN_URL = 'eventastic:login'
 
 # Application definition
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'eventastic',
+    'registration',
 ]
 
 MIDDLEWARE = [
@@ -106,8 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-LOGIN_URL = 'eventastic:login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load eventastic_template_tags %}
 
 <html>
   <head>
@@ -23,6 +24,13 @@
   <body>
     <header style="background-color: #baecf2">
         <img class="d-inline px-2 py-2" src="{% static 'images/logo.png' %}" style="height: 7rem;"/>
+
+        {% if user.is_authenticated %}
+          <span style="float: right;" class="px-2 py-2">
+            <a class="mx-2" href="{% url 'eventastic:account' %}">{{ request.user }}</a>
+            {% get_user_profile_pic request.user.id %}
+          </span>
+        {% endif %}
     </header>
 
     <nav class="navbar navbar-expand-lg navbar-light border-top border-bottom" style="background-color: #a9a9a9;">
@@ -74,7 +82,7 @@
 
 
     <main style="background-color: #efefef; padding-bottom: 5rem;">
-      <div class="d-inline-block d-none d-lg-inline-block align-top border mx-0" style="width: 20rem; height: 60rem; background-color: #a9a9a9">
+      <div class="d-inline-block d-none d-lg-inline-block align-top mx-0" style="width: 20rem; height: 60rem; background-color: #a9a9a9">
         {% if user.is_authenticated %}
           <h5>Hello, {{ request.user }}</h5>
         {% endif %}
@@ -83,7 +91,7 @@
           <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingOne">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                Recently Published Categories
+                Recently Published Events
               </button>
             </h2>
             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
@@ -139,7 +147,7 @@
           </div>
         </div>
       </div>
-      <div class="d-inline-block align-top mx-0" style="width: 65%; height: 60rem;">
+      <div class="d-inline-block align-top mx-0" style="width: 65%; height: 100%;">
         {% block body_block %}
         {% endblock %}
       </div>

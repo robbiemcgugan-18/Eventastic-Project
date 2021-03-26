@@ -2,9 +2,181 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  {{ event.name }}
+  view event
 {% endblock %}
 
 {% block body_block %}
-  <h1>{{ event.name }}</h1>
-{% endblock %}
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+/>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<!-- medium1 -->
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <img src="static/images/banner.jpeg" class="img-responsive" alt="Responsive image" />
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>
+<!-- medium2 -->
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+          <h2>Event Name</h2>
+          <h4>Event Description</h4>
+          <br />
+        </div>
+        <div class="col-md-4">
+          <br /><br /><br />
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox1" value="option1" /> 1
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox2" value="option2" /> 2
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox3" value="option3" /> 3
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox4" value="option4" /> 4
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox5" value="option5" /> 5
+          </label>
+        </div>
+        <div class="col-md-3">
+          <img
+            src="map.jpeg"
+            width="200px"
+            class="img-responsive"
+            alt="Responsive image"
+          />
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-3">Created by:User57</div>
+        <div class="col-md-3">Date: 20/05/2021</div>
+        <div class="col-md-3">Time: 15:00</div>
+        <div class="col-md-1"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">Number of Users interested: 17</div>
+        <div class="col-md-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"><button type="submit" class="btn btn-default">Interested</button></div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>
+<!-- medium -->
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+          <h2>Rating</h2>
+          <br />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox1" value="option1" /> 1
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox2" value="option2" /> 2
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox3" value="option3" /> 3
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox4" value="option4" /> 4
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox5" value="option5" /> 5
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- medium4 -->
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+          <h2>Comments</h2>
+          <br />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+          <form>
+            <div class="form-group">
+              <label for="">Add a Comment;</label>
+            </div>
+            <div class="form-group form-inline">
+              <input
+                type="text"
+                class="form-control"
+                id=""
+              />
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+          <h4>User27: Very Good! ☆☆☆☆☆</h4>
+          <h4>User12: Not Bad! ☆☆☆☆☆</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- bottom -->
+<div class="row">
+  <div
+    class="col-md-12"
+    style="display: block; margin-left: auto; margin-right: auto"
+  >
+    <ul class="list-group">
+      <li class="list-group-item">External Links Here</li>
+    </ul>
+  </div>
+</div>
+

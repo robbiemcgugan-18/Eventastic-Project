@@ -8,9 +8,11 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password',)
+        fields = ('username', 'first_name', 'last_name', 'email', 'password',)
 
         widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'password': forms.PasswordInput(attrs={'class': 'form-control'}),
@@ -45,7 +47,7 @@ class CategoryForm(forms.ModelForm):
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
             'picture': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
@@ -57,7 +59,7 @@ class EventForm(forms.ModelForm):
         widgets = {
             'category': forms.Select(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
             'start': forms.DateInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
             'postcode': forms.TextInput(attrs={'class': 'form-control'}),
@@ -73,7 +75,7 @@ class EditUserForm(forms.ModelForm):
 
 class EditProfileForm(forms.ModelForm):
     DOB = forms.DateField()
-    profilePicture = forms.ImageField(required=True)
+    profilePicture = forms.ImageField()
 
     class Meta:
         model = UserProfile

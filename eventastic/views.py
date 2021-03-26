@@ -280,8 +280,8 @@ def edit_account(request):
             return redirect('eventastic:account')
 
     else:
-        user_form = EditUserForm(request.POST, instance=request.user)
-        profile_form = EditProfileForm(request.POST, instance=user_profile)
+        user_form = EditUserForm(request.POST or None, instance=request.user, initial={'email': request.user.email})
+        profile_form = EditProfileForm(request.POST or None, instance=user_profile, initial={'DOB': user_profile.DOB, 'profilePicture': user_profile.profilePicture})
 
         context_dict['user_form'] = user_form
         context_dict['profile_form'] = profile_form

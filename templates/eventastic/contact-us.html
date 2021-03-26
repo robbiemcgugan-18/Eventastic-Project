@@ -1,8 +1,14 @@
-{% extends 'eventastic/base.html' %} {% load staticfiles %} {% load eventastic_template_tags %} {% block title_block %} Contact
-{% endblock %} {% block body_block %}
+{% extends 'eventastic/base.html' %}
+{% load staticfiles %}
 
-<div class="text-center">
-    <h1>CONTACT</h1>
+{% block title_block %}
+  Contact
+{% endblock %}
+
+{% block body_block %}
+
+<div>
+    <h1>Contact Us</h1>
     <p class="contact-title">If you have any question or advice for us, we will reply your question as soon as we
         possible. Otherwise, please call the 0423296345 to solve your problem immediately.</p>
 </div>
@@ -33,13 +39,5 @@
 
     </div>
 
-    <div>
-
-        <button type="button" onclick="document.location='{% url 'eventastic:base' %}'" class="btn button-custom px-3 m-1">Back to the home page</button>
-
-    </div>
-
 
     {% endblock %}
-
-   

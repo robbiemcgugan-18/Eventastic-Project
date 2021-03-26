@@ -315,3 +315,8 @@ def delete_account(request):
     context_dict['form'] = form
 
     return render(request, 'eventastic/delete_account.html', context=context_dict)
+
+def contact_us(request):
+    context_dict = {}
+
+    return render(request, 'eventastic/contact-us.html')

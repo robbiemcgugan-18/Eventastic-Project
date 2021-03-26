@@ -27,3 +27,21 @@ body {
 .button-custom:hover {
   background-color: #efefef;
 }
+
+.text-center{
+  width:100%;
+  text-align:center;
+  background-color: #caebf2;
+}
+.contact-title{
+  font-size:24px;
+  margin:30px 0;
+}
+.inner-link{
+  border:1px soli #ccc;
+  padding:20px;
+  border-radius:15px;
+}
+.contact-item{
+  margin-bottom:10px;
+}

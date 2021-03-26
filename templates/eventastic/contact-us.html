@@ -1,0 +1,45 @@
+{% extends 'eventastic/base.html' %} {% load staticfiles %} {% load eventastic_template_tags %} {% block title_block %} Contact
+{% endblock %} {% block body_block %}
+
+<div class="text-center">
+    <h1>CONTACT</h1>
+    <p class="contact-title">If you have any question or advice for us, we will reply your question as soon as we
+        possible. Otherwise, please call the 0423296345 to solve your problem immediately.</p>
+</div>
+
+
+
+<div class="bg-light">
+
+    <div class="inner-link">
+
+        <address class="contact-item">
+            <strong>Email Address</strong>
+            <br>
+            <a href="mailto:#">first.last@example.com</a>
+        </address>
+
+        <address class="contact-item">
+            <strong>Facebook</strong>
+            <br>
+            <a href="http://www.facebook.com">http://www.facebook.com</a>
+        </address>
+
+        <address class="contact-item">
+            <strong>Instagram</strong>
+            <br>
+            <a href="https://www.instagram.com">https://www.instagram.com</a>
+        </address>
+
+    </div>
+
+    <div>
+
+        <button type="button" onclick="document.location='{% url 'eventastic:base' %}'" class="btn button-custom px-3 m-1">Back to the home page</button>
+
+    </div>
+
+
+    {% endblock %}
+
+   

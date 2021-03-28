@@ -44,9 +44,17 @@
 
   <div class="m-4 bg-light">
     <h2>Events you are interested in</h2>
-    <ul>
-      <li>No Events yet</li>
-    </ul>
+    {% if interested_events %}
+      <ul>
+        {% for event in interested_events %}
+          <li>
+            <a href="{% url 'eventastic:show_event' event.category.slug event.slug %}">{{ event.name }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <strong>You are not interested in any events</strong>
+    {% endif %}
   </div>
 
   <div class="m-4 bg-light">

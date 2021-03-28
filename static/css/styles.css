@@ -8,11 +8,6 @@ body {
     vertical-align: top;
 }
 
-/** main {
-  background-color: #56CCF2;
-  padding-bottom: 5rem;
-} */
-
 #footer {
   position: absolute;
   bottom: 0;
@@ -27,6 +22,24 @@ body {
 .button-custom:hover {
   background-color: #89e4f9;
 }
+
+.comment {
+    border: 1px solid rgba(16, 46, 46, 1);
+    background-color: #caebf2;
+    float: left;
+    width: 40rem;
+    border-radius: 5px;
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-top: 10px
+}
+
+.comment h4,
+.comment span,
+.darker span {
+    display: inline
+}
+
 
 .text-center{
   width:100%;

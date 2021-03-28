@@ -11,7 +11,7 @@
     <h1 class="mb-3 text-white">{{ event.name }}</h1>
     <h4 class="mb-3 text-white">{{ event.description }}</h4>
     {% if user.is_authenticated %}
-      <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" value="{{ event.name }}" url="{% url 'eventastic:interest' %}" type="button">Register Interest</button>
+      <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" value="{{ event.name }}" url="{% url 'eventastic:interest' %}" {% if is_interested %}style="background-color:white; color:black" {% endif %} type="button">{% if is_interested %} Interested {% else %} Register Interest {% endif %}</button>
     {% else %}
       <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" onclick="document.location='{% url 'eventastic:login' %}'" type="button">Register Interest</button>
     {% endif %}
@@ -25,53 +25,26 @@
     </div>
   </div>
 
-  <div>
-    <h1>Rate the Event</h1>
+  <div class="container">
+    <h1>Comments</h1>
+    <form id="category_form" method="post" action="{% url 'eventastic:show_event' event.category.slug event.slug %}" enctype="multipart/form-data">
+      {% csrf_token %}
 
+      {{ form.as_p }}
 
-  </div>
-
-
-<!-- medium4 -->
-<div class="col-md-12">
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-3">
-          <h2>Comments</h2>
-          <br />
-        </div>
-      </div>
+      <input type="submit" name="submit" value="Add Comment" />
+    </form>
+    <div class="row">
+      <div class="col-sm-5 col-md-6 col-12 pb-4">
+        {% for comment in comments %}
+          <div class="comment mt-4 text-justify float-left">
+            <img src="{{ comment.username.profilePicture.url }}" width=60rem height=60rem class="rounded-circle p-2" />
+            <strong><h4>{{ comment.username }}</h4> <span>- {{ comment.posted }}</span></strong> <br>
+            <p class="m-2">{{ comment.comment }}</p>
+          </div>
+        {% endfor %}
     </div>
-    <div class="col-md-2"></div>
-  </div>
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-6">
-          <form>
-            <div class="form-group">
-              <label for="">Add a Comment;</label>
-            </div>
-            <div class="form-group form-inline">
-              <input
-                type="text"
-                class="form-control"
-                id=""
-              />
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
-          <h4>User27: Very Good! ☆☆☆☆☆</h4>
-          <h4>User12: Not Bad! ☆☆☆☆☆</h4>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+
 
 {% endblock %}

@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from eventastic.forms import UserForm, UserProfileForm, CategoryForm, EventForm, EditUserForm, EditProfileForm, DeleteUserForm
+from eventastic.forms import UserForm, UserProfileForm, CategoryForm, EventForm, EditUserForm, EditProfileForm, DeleteUserForm, AddCommentForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from eventastic.models import Category, Event, UserProfile
+from eventastic.models import Category, Event, UserProfile, Comment
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
@@ -141,8 +141,6 @@ def create_category(request):
         # Get the data from the form
         form = CategoryForm(request.POST)
 
-        print(request.FILES)
-
         # If the form information is valid then save the information in the database
         if form.is_valid():
             form_data = form.save(commit=False)
@@ -182,10 +180,33 @@ def show_event(request, category_name_slug, event_name_slug):
 
     try:
         user_profile = UserProfile.objects.get(user=request.user.id)
-        is_interested = Attend.objects.get(name=event, username=user_profile)
+        is_interested = event.usersInterested.filter(user=user_profile).exists()
         context_dict['is_interested'] = is_interested
     except:
-        context_dict['is_interested'] = None
+        context_dict['is_interested'] = False
+
+    if request.method == 'POST':
+        form = AddCommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.name = event
+            comment.username = user_profile
+
+            comment.save()
+
+            return redirect('eventastic:show_event', event_name_slug=event_name_slug, category_name_slug=category_name_slug)
+
+        else:
+            messages.error(request, "Invalid Form")
+
+    else:
+        form = AddCommentForm(request.POST)
+
+    context_dict['form'] = form
+
+    comments = Comment.objects.filter(name=event)
+    context_dict['comments'] = comments
 
     # Render the view onscreen using the given context
     return render(request, 'eventastic/show_event.html', context=context_dict)
@@ -262,9 +283,15 @@ def account(request):
 
     user_profile = UserProfile.objects.get(user=request.user.id)
     organised_events = Event.objects.filter(createdBy=user_profile)
+    interested_events = []
+
+    for event in Event.objects.all():
+        if event.usersInterested.filter(user=user_profile).exists():
+            interested_events.append(event)
 
     context_dict['user_profile'] = user_profile
     context_dict['organised_events'] = organised_events
+    context_dict['interested_events'] = interested_events
 
     return render(request, 'eventastic/account.html', context=context_dict)
 
@@ -330,8 +357,39 @@ def contact_us(request):
     return render(request, 'eventastic/contact-us.html')
 
 @login_required
+def add_comment(request, event_name_slug, category_name_slug):
+    context_dict = {}
+
+    event = Event.objects.get(slug=event_name_slug)
+    user_profile = UserProfile.objects.get(user=request.user.id)
+
+    if request.method == 'POST':
+        form = AddCommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.name = event
+            comment.username = user_profile
+
+            comment.save()
+
+            return redirect('eventastic:show_event', event_name_slug=event_name_slug, category_name_slug=category_name_slug)
+
+        else:
+            messages.error(request, "Invalid Form")
+
+    else:
+        form = AddCommentForm(request.POST)
+
+    context_dict['form'] = form
+
+    return render(request, 'eventastic/show_event.html', context=context_dict)
+
+
+
+@login_required
 def interest(request):
-    if request.GET.get('action') == 'post':
+    if request.GET.get('action') == 'get':
         result = ''
         name = request.GET.get('name')
 
@@ -342,10 +400,13 @@ def interest(request):
             event.numberInterested -= 1
             result = event.numberInterested
             event.save()
+            liked = False
+
         else:
             event.usersInterested.add(user_profile)
             event.numberInterested += 1
             result = event.numberInterested
             event.save()
+            liked = True
 
-        return JsonResponse({'result': result, })
+        return JsonResponse({'result': result, 'liked': liked, })

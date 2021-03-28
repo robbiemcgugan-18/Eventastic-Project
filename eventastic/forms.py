@@ -1,5 +1,5 @@
 from django import forms
-from eventastic.models import UserProfile, Category, Event
+from eventastic.models import UserProfile, Category, Event, Comment
 from django.contrib.auth.models import User
 from django.views.generic.edit import UpdateView
 
@@ -101,4 +101,13 @@ class DeleteUserForm(forms.ModelForm):
 
         widgets = {
             'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+        }
+
+class AddCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('comment',)
+
+        widgets = {
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }

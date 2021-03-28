@@ -34,6 +34,7 @@ class Event(models.Model):
     name = models.CharField(max_length=30, primary_key=True)
     description = models.CharField(max_length=200)
     start = models.DateField(default=None)
+    usersInterested = models.ManyToManyField(UserProfile,blank=True,related_name='interest')
     numberInterested = models.IntegerField(default=0)
     picture = models.ImageField(upload_to='event_images/', blank=True)
     address = models.CharField(max_length=40)
@@ -50,14 +51,6 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
-
-class Attend(models.Model):
-    name = models.ForeignKey(Event, on_delete=models.CASCADE)
-    username = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0)
-
-    def __str__(self):
-        return f"{self.username} {self.name}"
 
 class Comment(models.Model):
     name = models.ForeignKey(Event, on_delete=models.CASCADE)

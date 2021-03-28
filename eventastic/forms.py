@@ -67,11 +67,19 @@ class EventForm(forms.ModelForm):
         }
 
 class EditUserForm(forms.ModelForm):
+    first_name = forms.CharField()
+    last_name = forms.CharField()
     email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ('email',)
+        fields = ('first_name','last_name','email',)
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 class EditProfileForm(forms.ModelForm):
     DOB = forms.DateField()
@@ -80,6 +88,11 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('DOB','profilePicture',)
+
+        widgets = {
+            'DOB': forms.DateInput(attrs={'class': 'form-control'}),
+            'profilePicture': forms.FileInput(attrs={'class': 'form-control'}),
+        }
 
 class DeleteUserForm(forms.ModelForm):
     class Meta:

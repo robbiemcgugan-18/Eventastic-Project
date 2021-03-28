@@ -7,58 +7,31 @@
 
 {% block body_block %}
 
-<div class="p-5 text-center bg-light" style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{ event.picture.url }}); object-fit: cover; height: 20rem; width: 80rem">
+  <div class="p-5 text-center bg-light" style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{ event.picture.url }}); object-fit: cover; height: 20rem; width: 80rem">
     <h1 class="mb-3 text-white">{{ event.name }}</h1>
     <h4 class="mb-3 text-white">{{ event.description }}</h4>
-    <a class="btn btn-outline-light btn-lg mb-3" href="#!" role="button">Register Interest</a>
+    {% if user.is_authenticated %}
+      <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" value="{{ event.name }}" url="{% url 'eventastic:interest' %}" type="button">Register Interest</button>
+    {% else %}
+      <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" onclick="document.location='{% url 'eventastic:login' %}'" type="button">Register Interest</button>
+    {% endif %}
     <div>
       <span class="m-4 text-white">Created By: {{ event.createdBy }}</span>
       <span class="m-4 text-white">Start: {{ event.start }}</span>
       <span class="m-4 text-white">Location: {{ event.address }} {{ event.postcode }}</span>
     </div>
+    <div class="m-2">
+      <span class="m-4 text-white h3"><span id="interest-counter">{{ event.numberInterested }}</span> users are interested in this event</span>
+    </div>
   </div>
 
-<!-- medium -->
-<div class="col-md-12">
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-3">
-          <h2>Rating</h2>
-          <br />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2"></div>
+  <div>
+    <h1>Rate the Event</h1>
+
+
   </div>
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-3">
-          <label class="checkbox-inline">
-            <input type="checkbox" id="inlineCheckbox1" value="option1" /> 1
-          </label>
-          <label class="checkbox-inline">
-            <input type="checkbox" id="inlineCheckbox2" value="option2" /> 2
-          </label>
-          <label class="checkbox-inline">
-            <input type="checkbox" id="inlineCheckbox3" value="option3" /> 3
-          </label>
-          <label class="checkbox-inline">
-            <input type="checkbox" id="inlineCheckbox4" value="option4" /> 4
-          </label>
-          <label class="checkbox-inline">
-            <input type="checkbox" id="inlineCheckbox5" value="option5" /> 5
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+
 <!-- medium4 -->
 <div class="col-md-12">
   <div class="row">

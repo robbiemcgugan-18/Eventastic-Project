@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from eventastic.forms import UserForm, UserProfileForm, CategoryForm, EventForm, EditUserForm, EditProfileForm, DeleteUserForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from eventastic.models import Category, Event, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
+from django.views import View
 
 def index(request):
 
@@ -179,6 +180,13 @@ def show_event(request, category_name_slug, event_name_slug):
     except Event.DoesNotExist:
         context_dict['event'] = None
 
+    try:
+        user_profile = UserProfile.objects.get(user=request.user.id)
+        is_interested = Attend.objects.get(name=event, username=user_profile)
+        context_dict['is_interested'] = is_interested
+    except:
+        context_dict['is_interested'] = None
+
     # Render the view onscreen using the given context
     return render(request, 'eventastic/show_event.html', context=context_dict)
 
@@ -280,7 +288,7 @@ def edit_account(request):
             return redirect('eventastic:account')
 
     else:
-        user_form = EditUserForm(request.POST or None, instance=request.user, initial={'email': request.user.email})
+        user_form = EditUserForm(request.POST or None, instance=request.user, initial={'first_name': request.user.first_name, 'last_name': request.user.last_name, 'email': request.user.email})
         profile_form = EditProfileForm(request.POST or None, instance=user_profile, initial={'DOB': user_profile.DOB, 'profilePicture': user_profile.profilePicture})
 
         context_dict['user_form'] = user_form
@@ -320,3 +328,24 @@ def contact_us(request):
     context_dict = {}
 
     return render(request, 'eventastic/contact-us.html')
+
+@login_required
+def interest(request):
+    if request.GET.get('action') == 'post':
+        result = ''
+        name = request.GET.get('name')
+
+        user_profile = UserProfile.objects.get(user=request.user.id)
+        event = Event.objects.get(name=name)
+        if event.usersInterested.filter(user=user_profile).exists():
+            event.usersInterested.remove(user_profile)
+            event.numberInterested -= 1
+            result = event.numberInterested
+            event.save()
+        else:
+            event.usersInterested.add(user_profile)
+            event.numberInterested += 1
+            result = event.numberInterested
+            event.save()
+
+        return JsonResponse({'result': result, })

@@ -402,3 +402,23 @@ def interest(request):
             liked = True
 
         return JsonResponse({'result': result, 'liked': liked, })
+
+def find_users(request):
+    context_dict = {}
+
+    users = UserProfile.objects.order_by('user')
+    context_dict['users'] = users
+
+    return render(request, 'eventastic/find_users.html', context=context_dict)
+
+def show_user_events(request, user_slug):
+    context_dict = {}
+
+    requested_user = UserProfile.objects.get(user=user_slug)
+    user_events = Event.objects.filter(createdBy=requested_user)
+
+    context_dict['user_events'] = user_events
+    context_dict['requested_user'] = requested_user
+
+
+    return render(request, 'eventastic/show_user_events.html', context=context_dict)

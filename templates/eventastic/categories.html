@@ -2,20 +2,20 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Categories
+  Categories
 {% endblock %}
 
 {% block body_block %}
-    <h1>Categories</h1>
-    {% if categories %}
-        <ul>
-            {% for category in categories %}
-                <li>
-                    <a href="{% url 'eventastic:show_category' category.slug %}">{{ category.name }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No Categories are present</p>
-    {% endif %}
+  <h1>Categories</h1>
+  {% if categories %}
+    <ul>
+      {% for category in categories %}
+        <li>
+          <a href="{% url 'eventastic:show_category' category.slug %}">{{ category.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No Categories are present</p>
+  {% endif %}
 {% endblock %}

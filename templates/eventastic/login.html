@@ -10,16 +10,14 @@
 
     <form id="login_form" method="post" action="{% url 'eventastic:login' %}">
         {% csrf_token %}
-        Username: <input class="form-control" type="text" name="username"
-                         value="" size="50"/>
-        Password: <input class="form-control" type="password" name="password"
-                         value="" size="50"/>
-        <br/>
-        <input type="submit" value="Login"/>
+        Username: <input class="form-control" type="text" name="username" value="" size="50" />
+        Password: <input class="form-control" type="password" name="password" value="" size="50" />
+        <br />
+        <input type="submit" value="Login" />
     </form>
 
     <p>
-        Not Registered?
-        <a href="{% url 'eventastic:register' %}">Register Here</a>
+      Not Registered?
+      <a href="{% url 'eventastic:register' %}">Register Here</a>
     </p>
 {% endblock %}

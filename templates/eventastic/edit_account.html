@@ -7,14 +7,12 @@
 
 {% block body_block %}
     <h1>Update Details</h1>
-    <form id="edit_form" method="post"
-          action="{% url 'eventastic:edit_account' %}"
-          enctype="multipart/form-data">
+      <form id="edit_form" method="post" action="{% url 'eventastic:edit_account' %}" enctype="multipart/form-data">
         {% csrf_token %}
 
         {{ user_form.as_p }}
         {{ profile_form.as_p }}
 
-        <input type="submit" name="submit" value="Update Details"/>
-    </form>
+        <input type="submit" name="submit" value="Update Details" />
+      </form>
 {% endblock %}

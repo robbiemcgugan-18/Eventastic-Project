@@ -96,16 +96,14 @@ def user_login(request):
 
             # If the account exists but is disabled, notify user
             else:
-                return HttpResponse("Your account is disabled")
+                messages.error(request, "Account Disabled")
 
         # If an account with the given details does not exist, notify the user
         else:
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied")
+            messages.error(request, "Invalid Login Details supplied")
 
     # If the form has not been submitted, render the view onscreen
-    else:
-        return render(request, 'eventastic/login.html')
+    return render(request, 'eventastic/login.html')
 
 
 @login_required

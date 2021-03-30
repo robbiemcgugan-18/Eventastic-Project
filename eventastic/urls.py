@@ -17,6 +17,5 @@ urlpatterns = [
     path('create-category/', views.create_category, name='create_category'),
     path('create_event/', views.create_event, name='create_event'),
     path('categories/<slug:category_name_slug>/<slug:event_name_slug>/', views.show_event, name='show_event'),
-    path('categories/<slug:category_name_slug>/<slug:event_name_slug>/add-comment/', views.add_comment, name='add_comment'),
     path('interest/', views.interest, name='interest'),
 ]

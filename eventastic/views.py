@@ -9,10 +9,19 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.views import View
+from geopy import Nominatim
 
 def index(request):
+    context_dict = {}
 
-    return render(request, 'eventastic/index.html')
+    top_events = Event.objects.all()
+
+    if len(top_events) > 9:
+        top_events = top_events[:9]
+
+    context_dict['top_events'] = top_events
+
+    return render(request, 'eventastic/index.html', context=context_dict)
 
 def register(request):
     # Initialises a variable that tracks if the user has registered an account
@@ -186,6 +195,9 @@ def show_event(request, category_name_slug, event_name_slug):
         context_dict['is_interested'] = False
 
     if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('eventastic:login')
+
         form = AddCommentForm(request.POST)
 
         if form.is_valid():
@@ -207,6 +219,18 @@ def show_event(request, category_name_slug, event_name_slug):
 
     comments = Comment.objects.filter(name=event)
     context_dict['comments'] = comments
+
+    locator = Nominatim(user_agent="myGeocoder")
+
+    try:
+        location = locator.geocode(event.postcode)
+
+        context_dict['latitude'] = location.latitude
+        context_dict['longitude'] = location.longitude
+
+    except:
+        context_dict['latitude'] = None
+        context_dict['longitude'] = None
 
     # Render the view onscreen using the given context
     return render(request, 'eventastic/show_event.html', context=context_dict)
@@ -355,36 +379,6 @@ def contact_us(request):
     context_dict = {}
 
     return render(request, 'eventastic/contact-us.html')
-
-@login_required
-def add_comment(request, event_name_slug, category_name_slug):
-    context_dict = {}
-
-    event = Event.objects.get(slug=event_name_slug)
-    user_profile = UserProfile.objects.get(user=request.user.id)
-
-    if request.method == 'POST':
-        form = AddCommentForm(request.POST)
-
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.name = event
-            comment.username = user_profile
-
-            comment.save()
-
-            return redirect('eventastic:show_event', event_name_slug=event_name_slug, category_name_slug=category_name_slug)
-
-        else:
-            messages.error(request, "Invalid Form")
-
-    else:
-        form = AddCommentForm(request.POST)
-
-    context_dict['form'] = form
-
-    return render(request, 'eventastic/show_event.html', context=context_dict)
-
 
 
 @login_required

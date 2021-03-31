@@ -11,6 +11,10 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password',)
 
+        help_texts = {
+            'username': None,
+        }
+
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -36,7 +40,7 @@ class UserProfileForm(forms.ModelForm):
         fields = ('DOB', 'profilePicture')
 
         widgets = {
-            'DOB': forms.DateInput(attrs={'class': 'form-control'}),
+            'DOB': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD'}),
             'profilePicture': forms.FileInput(attrs={'class': 'form-control'}),
         }
 

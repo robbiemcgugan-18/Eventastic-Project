@@ -10,6 +10,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.views import View
 from geopy import Nominatim
+from django.core.files.images import ImageFile
 
 def index(request):
     context_dict = {}
@@ -48,6 +49,8 @@ def register(request):
 
             if 'profilePicture' in request.FILES:
                 profile.profilePicture = request.FILES['profilePicture']
+            else:
+                profile.profilePicture = ImageFile(open("logo.png", 'rb'))
 
             profile.save()
 
@@ -156,6 +159,8 @@ def create_category(request):
 
             if 'picture' in request.FILES:
                 form_data.picture = request.FILES['picture']
+            else:
+                form_data.picture = ImageFile(open("default.jpg", 'rb'))
 
             form_data.save()
 

@@ -25,16 +25,16 @@ def generate_data():
         user_ins.set_password("maggie05")
         user_ins.save()
     # generate 3 user profile
-    profile1 = UserProfile(user=user1, DOB=datetime.datetime(1990, 1, 1))
-    profile2 = UserProfile(user=user2, DOB=datetime.datetime(1995, 1, 1))
-    profile3 = UserProfile(user=user3, DOB=datetime.datetime(2000, 1, 1))
+    profile1 = UserProfile(user=user1, DOB=datetime.datetime(1990, 1, 1), picture="John.jpg")
+    profile2 = UserProfile(user=user2, DOB=datetime.datetime(1995, 1, 1), picture="Marry.jpg")
+    profile3 = UserProfile(user=user3, DOB=datetime.datetime(2000, 1, 1), picture="Kate.jpg")
     for profile_ins in [profile1, profile2, profile3]:
         profile_ins.save()
     # generate multiple category
     # Prepare an image for each category and place it in category_images
     aviation_category = Category(name="Aviation", description="Here is Aviation description", picture="Aviation.jpg")
     bake_sales_category = Category(name="Bake Sales", description="Here is Bake Sales description",
-                                   picture="Bake Sales.jpg")
+                                   picture="BakeSales.jpg")
     cooking_category = Category(name="Cooking", description="Here is Cooking description", picture="Cooking.jpg")
     exploration_category = Category(name="Exploration", description="Here is Exploration description", picture="Exploration.jpg")
     fishing_category = Category(name="Fishing", description="Here is Fishing description", picture="Fishing.jpg")

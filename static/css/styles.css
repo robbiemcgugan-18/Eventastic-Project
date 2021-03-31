@@ -1,15 +1,15 @@
 body {
-  position: relative;
-  min-height: 100vh;
-  font-family: 'Roboto', sans-serif;
+    position: relative;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
 }
 
 html, body {
-  height: 100%;
+    height: 100%;
 }
 
 .wrapper {
-  padding-bottom: 10vh;
+    padding-bottom: 10vh;
 }
 
 .home-container {
@@ -17,26 +17,26 @@ html, body {
     margin: 0em;
     padding: 1rem;
     height: auto;
-    vertical-align:top;
+    vertical-align: top;
 }
 
 #footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 10vh;
-  background-color: red;
-  color: white;
-  text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 10vh;
+    background-color: red;
+    color: white;
+    text-align: center;
 }
 
 .button-custom {
-  background-color: #caebf2;
+    background-color: #caebf2;
 }
 
 .button-custom:hover {
-  background-color: #89e4f9;
+    background-color: #89e4f9;
 }
 
 .comment {
@@ -57,37 +57,40 @@ html, body {
 }
 
 .marker {
-  background-image: url("../images/mapbox-icon.png");
-  background-size: cover;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  cursor: pointer;
+    background-image: url("../images/mapbox-icon.png");
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 #set-width {
-  width: 60rem;  
+    width: 60rem;
 }
 
 .event-header {
-  object-fit: cover;
-  height: 20rem;
+    object-fit: cover;
+    height: 20rem;
 }
 
-.text-center{
-  width:100%;
-  text-align:center;
-  background-color: #caebf2;
+.text-center {
+    width: 100%;
+    text-align: center;
+    background-color: #caebf2;
 }
-.contact-title{
-  font-size:24px;
-  margin:30px 0;
+
+.contact-title {
+    font-size: 24px;
+    margin: 30px 0;
 }
-.inner-link{
-  border:1px soli #ccc;
-  padding:20px;
-  border-radius:15px;
+
+.inner-link {
+    border: 1px soli #ccc;
+    padding: 20px;
+    border-radius: 15px;
 }
-.contact-item{
-  margin-bottom:10px;
+
+.contact-item {
+    margin-bottom: 10px;
 }

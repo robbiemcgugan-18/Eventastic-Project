@@ -1,7 +1,8 @@
 from django import forms
-from eventastic.models import UserProfile, Category, Event, Comment
 from django.contrib.auth.models import User
-from django.views.generic.edit import UpdateView
+
+from eventastic.models import UserProfile, Category, Event, Comment
+
 
 class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
@@ -28,6 +29,7 @@ class UserForm(forms.ModelForm):
                 "password and confirm_password does not match"
             )
 
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -37,6 +39,7 @@ class UserProfileForm(forms.ModelForm):
             'DOB': forms.DateInput(attrs={'class': 'form-control'}),
             'profilePicture': forms.FileInput(attrs={'class': 'form-control'}),
         }
+
 
 class CategoryForm(forms.ModelForm):
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
@@ -50,6 +53,7 @@ class CategoryForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'picture': forms.FileInput(attrs={'class': 'form-control'}),
         }
+
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -66,6 +70,7 @@ class EventForm(forms.ModelForm):
             'picture': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
+
 class EditUserForm(forms.ModelForm):
     first_name = forms.CharField()
     last_name = forms.CharField()
@@ -73,7 +78,7 @@ class EditUserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name','last_name','email',)
+        fields = ('first_name', 'last_name', 'email',)
 
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -81,18 +86,20 @@ class EditUserForm(forms.ModelForm):
             'email': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
+
 class EditProfileForm(forms.ModelForm):
     DOB = forms.DateField()
     profilePicture = forms.ImageField()
 
     class Meta:
         model = UserProfile
-        fields = ('DOB','profilePicture',)
+        fields = ('DOB', 'profilePicture',)
 
         widgets = {
             'DOB': forms.DateInput(attrs={'class': 'form-control'}),
             'profilePicture': forms.FileInput(attrs={'class': 'form-control'}),
         }
+
 
 class DeleteUserForm(forms.ModelForm):
     class Meta:
@@ -102,6 +109,7 @@ class DeleteUserForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput(attrs={'class': 'form-control'}),
         }
+
 
 class AddCommentForm(forms.ModelForm):
     class Meta:

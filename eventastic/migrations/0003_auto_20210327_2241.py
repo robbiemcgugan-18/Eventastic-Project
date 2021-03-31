@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('eventastic', '0002_auto_20210320_2152'),
     ]
@@ -13,7 +12,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='event',
             name='usersInterested',
-            field=models.ManyToManyField(blank=True, default=None, related_name='interest', to='eventastic.UserProfile'),
+            field=models.ManyToManyField(blank=True, default=None, related_name='interest',
+                                         to='eventastic.UserProfile'),
         ),
         migrations.DeleteModel(
             name='Attend',

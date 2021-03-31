@@ -2,89 +2,108 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  {{ event.name }}
+    {{ event.name }}
 {% endblock %}
 
 {% block body_block %}
-  <div>
-    <div id="set-width" class="p-5 text-center bg-light event-header d-inline-block" style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{ event.picture.url }});">
-      <h1 class="mb-3 text-white">{{ event.name }}</h1>
-      <h4 class="mb-3 text-white"><p>{{ event.description }}</p></h4>
-      {% if user.is_authenticated %}
-        <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" value="{{ event.name }}" url="{% url 'eventastic:interest' %}" {% if is_interested %}style="background-color:white; color:black" {% endif %} type="button">{% if is_interested %} Interested {% else %} Register Interest {% endif %}</button>
-      {% else %}
-        <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" onclick="document.location='{% url 'eventastic:login' %}'" type="button">Register Interest</button>
-      {% endif %}
-      <div>
-        <span class="m-4 text-white">Created By: {{ event.createdBy }}</span>
-        <span class="m-4 text-white">Start: {{ event.start }}</span>
-        <span class="m-4 text-white">Location: {{ event.address }} {{ event.postcode }}</span>
-      </div>
-      <div class="m-2">
-        <span class="m-4 text-white h3"><span id="interest-counter">{{ event.numberInterested }}</span> users are interested in this event</span>
-      </div>
+    <div>
+        <div id="set-width"
+             class="p-5 text-center bg-light event-header d-inline-block"
+             style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{ event.picture.url }});">
+            <h1 class="mb-3 text-white">{{ event.name }}</h1>
+            <h4 class="mb-3 text-white"><p>{{ event.description }}</p></h4>
+            {% if user.is_authenticated %}
+                <button id="interest-button"
+                        class="btn btn-outline-light btn-lg mb-3"
+                        value="{{ event.name }}"
+                        url="{% url 'eventastic:interest' %}"
+                        {% if is_interested %}style="background-color:white; color:black" {% endif %}
+                        type="button">{% if is_interested %}
+                    Interested {% else %} Register Interest {% endif %}</button>
+            {% else %}
+                <button id="interest-button"
+                        class="btn btn-outline-light btn-lg mb-3"
+                        onclick="document.location='{% url 'eventastic:login' %}'"
+                        type="button">Register Interest
+                </button>
+            {% endif %}
+            <div>
+                <span class="m-4 text-white">Created By: {{ event.createdBy }}</span>
+                <span class="m-4 text-white">Start: {{ event.start }}</span>
+                <span class="m-4 text-white">Location: {{ event.address }} {{ event.postcode }}</span>
+            </div>
+            <div class="m-2">
+                <span class="m-4 text-white h3"><span
+                        id="interest-counter">{{ event.numberInterested }}</span> users are interested in this event</span>
+            </div>
+        </div>
+
+        <div id='map' class="d-inline-block"
+             style='width: 30rem; height: 20rem; vertical-align: top'></div>
     </div>
 
-    <div id='map' class="d-inline-block" style='width: 30rem; height: 20rem; vertical-align: top'></div>
-  </div>
+    <div>
+        <h1>Comments</h1>
+        <form id="category_form" method="post"
+              action="{% url 'eventastic:show_event' event.category.slug event.slug %}"
+              enctype="multipart/form-data">
+            {% csrf_token %}
 
-  <div>
-    <h1>Comments</h1>
-    <form id="category_form" method="post" action="{% url 'eventastic:show_event' event.category.slug event.slug %}" enctype="multipart/form-data">
-      {% csrf_token %}
+            {{ form.as_p }}
 
-      {{ form.as_p }}
-
-    <input type="submit" name="submit" value="Add Comment" />
-    </form>
-    <div class="row">
-      <div class="col-sm-5 col-md-6 col-12 pb-4">
-        {% for comment in comments %}
-          <div class="comment mt-4 text-justify float-left">
-            <img src="{{ comment.username.profilePicture.url }}" width=60rem height=60rem class="rounded-circle p-2" />
-            <strong><h4>{{ comment.username }}</h4> <span>- {{ comment.posted }}</span></strong> <br>
-            <p class="m-2">{{ comment.comment }}</p>
-          </div>
-        {% endfor %}
-      </div>
+            <input type="submit" name="submit" value="Add Comment"/>
+        </form>
+        <div class="row">
+            <div class="col-sm-5 col-md-6 col-12 pb-4">
+                {% for comment in comments %}
+                    <div class="comment mt-4 text-justify float-left">
+                        <img src="{{ comment.username.profilePicture.url }}"
+                             width=60rem height=60rem
+                             class="rounded-circle p-2"/>
+                        <strong><h4>{{ comment.username }}</h4>
+                            <span>- {{ comment.posted }}</span></strong> <br>
+                        <p class="m-2">{{ comment.comment }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    mapboxgl.accessToken = 'pk.eyJ1Ijoicm9iYmllbWNndWdhbiIsImEiOiJja212MW92a3owMHV6MnduMW1lOW9hcmozIn0.c1uIywPkB2utua5INvv4Cw';
-    var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [{{ longitude }}, {{ latitude }}],
-    zoom: 9
-    });
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoicm9iYmllbWNndWdhbiIsImEiOiJja212MW92a3owMHV6MnduMW1lOW9hcmozIn0.c1uIywPkB2utua5INvv4Cw';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [{{ longitude }}, {{ latitude }}],
+            zoom: 9
+        });
 
-    var geojson = {
-      type: 'FeatureCollection',
-      features: [{
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [{{ longitude }}, {{ latitude }}]
-        },
-        properties: {
-          title: 'Mapbox',
-          description: 'Washington, D.C.'
-        }
-      }]
-  };
+        var geojson = {
+            type: 'FeatureCollection',
+            features: [{
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [{{ longitude }}, {{ latitude }}]
+                },
+                properties: {
+                    title: 'Mapbox',
+                    description: 'Washington, D.C.'
+                }
+            }]
+        };
 
-  geojson.features.forEach(function(marker) {
+        geojson.features.forEach(function (marker) {
 
-  // create a HTML element for each feature
-  var el = document.createElement('div');
-  el.className = 'marker';
+            // create a HTML element for each feature
+            var el = document.createElement('div');
+            el.className = 'marker';
 
-  // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el)
-    .setLngLat(marker.geometry.coordinates)
-    .addTo(map);
-  });
-  </script>
+            // make a marker for each feature and add to the map
+            new mapboxgl.Marker(el)
+                .setLngLat(marker.geometry.coordinates)
+                .addTo(map);
+        });
+    </script>
 
 {% endblock %}

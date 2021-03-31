@@ -2,19 +2,21 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  Create Category
+    Create Category
 {% endblock %}
 
 {% block body_block %}
-  <h1>Create a Category</h1>
+    <h1>Create a Category</h1>
 
-  <div>
-    <form id="category_form" method="post" action="{% url 'eventastic:create_category' %}" enctype="multipart/form-data">
-      {% csrf_token %}
+    <div>
+        <form id="category_form" method="post"
+              action="{% url 'eventastic:create_category' %}"
+              enctype="multipart/form-data">
+            {% csrf_token %}
 
-      {{ form.as_p }}
+            {{ form.as_p }}
 
-      <input type="submit" name="submit" value="Create Category" />
-    </form>
-  </div>
+            <input type="submit" name="submit" value="Create Category"/>
+        </form>
+    </div>
 {% endblock %}

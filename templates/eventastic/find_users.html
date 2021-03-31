@@ -2,20 +2,20 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  Find Users
+    Find Users
 {% endblock %}
 
 {% block body_block %}
-  <h1>Find Users</h1>
-  {% if users %}
-    <ul>
-      {% for user in users %}
-        <li>
-          <a href="{% url 'eventastic:show_user_events' user.user.id %}">{{ user.user }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No Users Exist</p>
-  {% endif %}
+    <h1>Find Users</h1>
+    {% if users %}
+        <ul>
+            {% for user in users %}
+                <li>
+                    <a href="{% url 'eventastic:show_user_events' user.user.id %}">{{ user.user }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Users Exist</p>
+    {% endif %}
 {% endblock %}

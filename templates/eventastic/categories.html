@@ -2,20 +2,37 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  Categories
+    Categories
 {% endblock %}
 
 {% block body_block %}
-  <h1>Categories</h1>
-  {% if categories %}
-    <ul>
-      {% for category in categories %}
-        <li>
-          <a href="{% url 'eventastic:show_category' category.slug %}">{{ category.name }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No Categories are present</p>
-  {% endif %}
+    <h1>Categories</h1>
+    {% if category_paginator.object_list %}
+        <ul>
+            {% for category in category_paginator.object_list %}
+                <li>
+                    <a href="{% url 'eventastic:show_category' category.slug %}">{{ category.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="pagination-simple">
+            <!-- 如果当前页还有上一页，显示一个上一页的按钮 -->
+            {% if category_paginator.has_previous %}
+                <a href="?page={{ category_paginator.previous_page_number }}">Previous Page</a>
+            {% endif %}
+            <!-- 显示当前页面信息 -->
+            <span class="current">Page {{ category_paginator.number }} / Total {{ total_page }}</span>
+            <!-- 如果当前页还有下一页，显示一个下一页的按钮 -->
+            {% if category_paginator.has_next %}
+                <a href="?page={{ category_paginator.next_page_number }}">Next Page</a>
+            {% endif %}
+        </div>
+
+
+    {% else %}
+        <p>No Categories are present</p>
+    {% endif %}
+    <h4>Don't see a category that fits? </h4>
+    <a href="{% url 'eventastic:create_category' %}" class="btn btn-primary" role="button">Create a new Category</a>
 {% endblock %}

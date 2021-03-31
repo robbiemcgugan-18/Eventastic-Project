@@ -2,18 +2,20 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  Create Event
+    Create Event
 {% endblock %}
 
 {% block body_block %}
-  <h1>Create an Event</h1>
-  <div>
-    <form id="category_form" method="post" action="{% url 'eventastic:create_event' %}" enctype="multipart/form-data">
-      {% csrf_token %}
+    <h1>Create an Event</h1>
+    <div>
+        <form id="category_form" method="post"
+              action="{% url 'eventastic:create_event' %}"
+              enctype="multipart/form-data">
+            {% csrf_token %}
 
-      {{ form.as_p }}
+            {{ form.as_p }}
 
-      <input type="submit" name="submit" value="Create Event" />
-    </form>
-  </div>
+            <input type="submit" name="submit" value="Create Event"/>
+        </form>
+    </div>
 {% endblock %}

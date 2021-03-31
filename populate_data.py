@@ -36,9 +36,15 @@ def generate_data():
     bake_sales_category = Category(name="Bake Sales", description="Here is Bake Sales description",
                                    picture="Bake Sales.jpg")
     cooking_category = Category(name="Cooking", description="Here is Cooking description", picture="Cooking.jpg")
+    exploration_category = Category(name="Exploration", description="Here is Exploration description", picture="Exploration.jpg")
+    fishing_category = Category(name="Fishing", description="Here is Fishing description", picture="Fishing.jpg")
+    sports_category = Category(name="Sports", description="Here is Sports description", picture="Sports.jpg")
     aviation_category.save()
     bake_sales_category.save()
     cooking_category.save()
+    exploration_category.save()
+    fishing_category.save()
+    sports_category.save()
     # generate multiple event
     # Each event also prepares an image to be placed in event_images
     event1 = Event(name="aviation event1", description="aviation event1 description",

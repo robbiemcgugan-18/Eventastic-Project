@@ -7,32 +7,20 @@
 
 {% block body_block %}
     <h1>Categories</h1>
-    {% if category_paginator.object_list %}
-        <ul>
-            {% for category in category_paginator.object_list %}
-                <li>
-                    <a href="{% url 'eventastic:show_category' category.slug %}">{{ category.name }}</a>
+    {% if categories %}
+        <ul class="list-group my-4">
+            {% for category in categories %}
+                <li class="list-group-item h3 m-0 set-background">
+                    <a class="list" href="{% url 'eventastic:show_category' category.slug %}">{{ category.name }}</a>
                 </li>
             {% endfor %}
         </ul>
 
-        <div class="pagination-simple">
-
-            {% if category_paginator.has_previous %}
-                <a href="?page={{ category_paginator.previous_page_number }}">Previous Page</a>
-            {% endif %}
-
-            <span class="current">Page {{ category_paginator.number }} / Total {{ total_page }}</span>
-
-            {% if category_paginator.has_next %}
-                <a href="?page={{ category_paginator.next_page_number }}">Next Page</a>
-            {% endif %}
-        </div>
-
+        <h4>Don't see a category that fits?</h4>
 
     {% else %}
         <p>No Categories are present</p>
     {% endif %}
-    <h4>Don't see a category that fits? </h4>
+
     <a href="{% url 'eventastic:create_category' %}" class="btn btn-primary" role="button">Create a new Category</a>
 {% endblock %}

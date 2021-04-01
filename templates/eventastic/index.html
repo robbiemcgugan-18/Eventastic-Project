@@ -6,17 +6,28 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Top Events</h1>
+    <p class="h1 text-center fw-bold">
+      Welcome to Eventastic, the home of all types of events!
+    </p>
+    <p class="h5 text-center p-3">
+      No matter what you are interested in, you will for sure find something here that picks your fancy.
+      Don't see anything you like? Create your own events and bring your community together. So what are
+      you waiting for? Go ahead and create an account to start creating events or check out some of our top
+      events below.
+    </p>
+    <h2 class="text-center">Top Events</h1>
     <div class="container">
         <div class="row row-cols-3">
             {% for event in top_events %}
                 <div class="col">
-                    <div class="card" style="height:28rem;">
+                    <div class="card m-2" style="height:30rem;">
                         <img src="{{ event.picture.url }}" height="250rem"
                              class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">{{ event.name }}</h5>
                             <p class="card-text">{{ event.description }}</p>
+                            <p class="card-text">Users Interested: {{ event.numberInterested }}</p>
+                            <hr />
                             <a href="{% url 'eventastic:show_event' event.category.slug event.slug %}"
                                class="btn btn-primary">More Info</a>
                         </div>

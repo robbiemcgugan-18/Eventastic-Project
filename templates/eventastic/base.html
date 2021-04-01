@@ -30,7 +30,6 @@
 </head>
 
 <body>
-<div class="wrapper">
     <header style="background-color: #baecf2">
         <img class="d-inline px-2 py-2" src="{% static 'images/logo.png' %}"
              style="height: 7rem;"/>
@@ -99,7 +98,7 @@
                                   class="btn button-custom px-3 m-1">Register</button>
 
                       {% endif %}
-                <span>
+          </span>
 
               <button class="navbar-toggler" type="button"
                       data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -111,8 +110,7 @@
     </nav>
 
 
-    <main style="background-color: #efefef; padding-bottom: 5rem; height:100vh">
-        <div class="home-container" style="width: 20rem; height:100vh">
+        <div class="border-top border-bottom border-1 border-dark ms-2" style="width: 20rem; position:fixed;">
             {% if user.is_authenticated %}
                 <h5>Hello, {{ request.user }}</h5>
             {% endif %}
@@ -195,16 +193,14 @@
                 </div>
             </div>
         </div>
-        <div class="home-container" style="height:100vh">
+        <div style="margin-left:23rem; margin-top: 1rem; width: 80rem">
             {% block body_block %}
             {% endblock %}
         </div>
-    </main>
-</div>
 
-<footer id="footer" class="py-3 border-top" style="background-color: #a9a9a9;">
+<!-- <footer id="footer" class="py-3 border-top" style="background-color: #a9a9a9;">
     Footer Content
-</footer>
+</footer> -->
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
         integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"

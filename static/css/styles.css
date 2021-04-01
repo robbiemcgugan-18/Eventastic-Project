@@ -4,12 +4,32 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-html, body {
-    height: 100%;
+html, body, .set-background {
+  background-color: #efefef;
 }
 
-.wrapper {
-    padding-bottom: 10vh;
+a.list:link {
+  color: #181818;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.list:visited {
+  color: #808080;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.list:hover {
+  color: #000000;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a.list:active {
+  color: #000000;
+  background-color: transparent;
+  text-decoration: underline;
 }
 
 .home-container {
@@ -66,29 +86,27 @@ html, body {
 }
 
 #set-width {
-    width: 60rem;
-}
-
-.event-header {
-    object-fit: cover;
+    width: 65rem;
     height: 20rem;
 }
 
-.text-center {
+#set-category-dimensions {
     width: 100%;
-    text-align: center;
-    background-color: #caebf2;
+    height: 15rem;
+}
+
+.page-header {
+    object-fit: cover;
 }
 
 .contact-title {
-    font-size: 24px;
-    margin: 30px 0;
+    font-size: 2rem;
+    margin: 2rem 0;
 }
 
 .inner-link {
-    border: 1px soli #ccc;
+    border: 1px solid #ccc;
     padding: 20px;
-    border-radius: 15px;
 }
 
 .contact-item {

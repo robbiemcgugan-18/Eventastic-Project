@@ -28,9 +28,6 @@
             <input type="submit" name="submit" value="Register"/>
         </form>
 
-        <p>
-            Already got an Account?
-            <a href="{% url 'eventastic:login' %}">Login Here</a>
-        </p>
+        <div>Already got an Account? <a href="{% url 'eventastic:login' %}">Login Here</a> </div>
     {% endif %}
 {% endblock %}

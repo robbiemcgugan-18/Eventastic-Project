@@ -8,10 +8,10 @@
 {% block body_block %}
     <h1>Find Users</h1>
     {% if users %}
-        <ul>
+        <ul class="list-group my-4">
             {% for user in users %}
-                <li>
-                    <a href="{% url 'eventastic:show_user_events' user.user.id %}">{{ user.user }}</a>
+                <li class="list-group-item h3 m-0 set-background">
+                    <a class="list" href="{% url 'eventastic:show_user_events' user.user.id %}">{{ user.user }}</a>
                 </li>
             {% endfor %}
         </ul>

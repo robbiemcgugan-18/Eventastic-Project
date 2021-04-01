@@ -15,10 +15,7 @@ from django.core.files.images import ImageFile
 def index(request):
     context_dict = {}
 
-    top_events = Event.objects.all()
-
-    if len(top_events) > 9:
-        top_events = top_events[:9]
+    top_events = Event.objects.order_by('-numberInterested')[:9]
 
     context_dict['top_events'] = top_events
 
@@ -50,7 +47,7 @@ def register(request):
             if 'profilePicture' in request.FILES:
                 profile.profilePicture = request.FILES['profilePicture']
             else:
-                profile.profilePicture = ImageFile(open("logo.png", 'rb'))
+                profile.profilePicture = ImageFile(open("default.jpg", 'rb'))
 
             profile.save()
 
@@ -78,6 +75,8 @@ def register(request):
 
 
 def user_login(request):
+    context_dict = {'error_message': None}
+
     # If the method is POST (form has been submitted) the form will be processed
     if request.method == 'POST':
         # Get the username and password values from the POST request
@@ -99,16 +98,14 @@ def user_login(request):
 
             # If the account exists but is disabled, notify user
             else:
-                return HttpResponse("Your account is disabled")
+                context_dict['error_message'] = "Account is disabled"
 
         # If an account with the given details does not exist, notify the user
         else:
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied")
+            context_dict['error_message'] = "Username or Password is incorrect"
 
     # If the form has not been submitted, render the view onscreen
-    else:
-        return render(request, 'eventastic/login.html')
+    return render(request, 'eventastic/login.html', context=context_dict)
 
 
 @login_required
@@ -226,7 +223,7 @@ def show_event(request, category_name_slug, event_name_slug):
     context_dict['comments'] = comments
 
     locator = Nominatim(user_agent="myGeocoder")
-
+    print(event.postcode)
     try:
         location = locator.geocode(event.postcode)
 

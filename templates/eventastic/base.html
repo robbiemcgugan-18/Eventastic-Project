@@ -43,7 +43,7 @@
         {% endif %}
     </header>
 
-    <nav class="navbar navbar-expand-lg navbar-light border-top border-bottom"
+    <nav class="navbar navbar-expand-lg navbar-light border-top border-bottom border-1 border-dark"
          style="background-color: #a9a9a9;">
         <div class="container-fluid">
             <a class="navbar-brand d-lg-none">Navigation</a>
@@ -110,7 +110,7 @@
     </nav>
 
 
-        <div class="border-top border-bottom border-1 border-dark ms-2" style="width: 20rem; position:fixed;">
+        <div class="border-top border-bottom border-1 border-dark ms-2 d-none d-lg-block" style="width: 20rem; position:fixed;">
             {% if user.is_authenticated %}
                 <h5>Hello, {{ request.user }}</h5>
             {% endif %}
@@ -193,7 +193,7 @@
                 </div>
             </div>
         </div>
-        <div style="margin-left:23rem; margin-top: 1rem; width: 80rem">
+        <div class="body-block">
             {% block body_block %}
             {% endblock %}
         </div>

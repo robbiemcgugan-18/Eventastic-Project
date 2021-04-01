@@ -34,10 +34,25 @@ a.list:active {
 
 .home-container {
     display: table-cell;
-    margin: 0em;
     padding: 1rem;
     height: auto;
     vertical-align: top;
+}
+
+@media (min-width:1025px) {
+  .body-block {
+    margin-left: 23rem;
+    margin-top: 1rem;
+    width: auto;
+  }
+}
+
+@media (max-width:1025px) {
+  .body-block {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    width: auto;
+  }
 }
 
 #footer {
@@ -62,8 +77,6 @@ a.list:active {
 .comment {
     border: 1px solid rgba(16, 46, 46, 1);
     background-color: #caebf2;
-    float: left;
-    width: 40rem;
     border-radius: 5px;
     padding-left: 40px;
     padding-right: 30px;
@@ -86,8 +99,8 @@ a.list:active {
 }
 
 #set-width {
-    width: 65rem;
-    height: 20rem;
+    width: auto;
+    height: auto;
 }
 
 #set-category-dimensions {

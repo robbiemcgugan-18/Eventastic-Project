@@ -167,11 +167,10 @@ def create_category(request):
 
         # If the form information is not valid display the errors
         else:
-            print(form.errors)
+            messages.error(request, forms.errors)
 
     # If the form has not been submitted then render the view onscreen
-    else:
-        return render(request, 'eventastic/create_category.html', context={'form': form})
+    return render(request, 'eventastic/create_category.html', context={'form': form})
 
 def show_event(request, category_name_slug, event_name_slug):
     # Define empty context dictionary
@@ -270,11 +269,10 @@ def create_event(request):
 
         # If the form information is not valid then print the errors
         else:
-            print(form.errors)
+            messages.error(request, form.errors)
 
     # If the form has not been submitted then render the view onscreen
-    else:
-        return render(request, 'eventastic/create_event.html', context={'form': form})
+    return render(request, 'eventastic/create_event.html', context={'form': form})
 
 def categories(request):
     # Define empty context dictionary

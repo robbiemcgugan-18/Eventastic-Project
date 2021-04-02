@@ -11,7 +11,7 @@
 
     <div class="m-4 bg-light">
         <div class="mb-4">
-            <h2>Account Details</h2>
+            <h2 class="fw-bold">Account Details</h2>
             <ul class="list-unstyled">
                 <li><strong>Username:</strong> {{ request.user }}</li>
                 <li><strong>First Name: </strong> {{ request.user.first_name }}
@@ -26,13 +26,13 @@
 
             <button type="button"
                     onclick="document.location='{% url 'eventastic:edit_account' %}'"
-                    class="btn button-custom px-3 m-1">Update Details
+                    class="btn button-custom px-3 m-1 border-1 border-dark">Update Details
             </button>
         </div>
 
         <div class="mt-4 mb-4">
             <hr/>
-            <h2>Change Password</h2>
+            <h2 class="fw-bold">Change Password</h2>
             <form id="change_password" method="post"
                   action="{% url 'eventastic:account' %}">
                 {% csrf_token %}
@@ -43,7 +43,7 @@
 
         <div class="mt-4">
             <hr/>
-            <h2>Delete Account</h2>
+            <h2 class="fw-bold">Delete Account</h2>
             <button type="button"
                     onclick="document.location='{% url 'eventastic:delete_account' %}'"
                     class="btn btn-danger px-3 m-1">Delete
@@ -52,12 +52,12 @@
     </div>
 
     <div class="m-4 bg-light">
-        <h2>Events you are interested in</h2>
+        <h2 class="fw-bold">Events you are interested in</h2>
         {% if interested_events %}
-            <ul>
+            <ul class="list-group">
                 {% for event in interested_events %}
-                    <li>
-                        <a href="{% url 'eventastic:show_event' event.category.slug event.slug %}">{{ event.name }}</a>
+                    <li class="list-group-item h4 m-0 bg-white">
+                        <a class="list" href="{% url 'eventastic:show_event' event.category.slug event.slug %}">{{ event.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -67,12 +67,12 @@
     </div>
 
     <div class="m-4 bg-light">
-        <h2>Organised Events</h2>
+        <h2 class="fw-bold">Organised Events</h2>
         {% if organised_events %}
-            <ul>
+            <ul class="list-group">
                 {% for event in organised_events %}
-                    <li>
-                        <a href="{% url 'eventastic:show_event' event.category.slug event.slug %}">{{ event.name }}</a>
+                    <li class="list-group-item h4 m-0 bg-white">
+                        <a class="list" href="{% url 'eventastic:show_event' event.category.slug event.slug %}">{{ event.name }}</a>
                     </li>
                 {% endfor %}
             </ul>

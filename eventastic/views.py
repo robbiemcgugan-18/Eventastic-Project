@@ -16,7 +16,6 @@ def index(request):
     context_dict = {}
 
     top_events = Event.objects.order_by('-numberInterested')[:9]
-
     context_dict['top_events'] = top_events
 
     return render(request, 'eventastic/index.html', context=context_dict)
@@ -215,7 +214,7 @@ def show_event(request, category_name_slug, event_name_slug):
             messages.error(request, "Invalid Form")
 
     else:
-        form = AddCommentForm(request.POST)
+        form = AddCommentForm()
 
     context_dict['form'] = form
 

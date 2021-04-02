@@ -36,7 +36,7 @@
 
         {% if user.is_authenticated %}
             <span style="float: right;" class="px-2 py-2">
-              <a class="mx-2"
+              <a class="mx-2 sidebar-list"
                  href="{% url 'eventastic:account' %}">{{ request.user }}</a>
               {% get_user_profile_pic request.user.id %}
             </span>
@@ -49,29 +49,29 @@
             <a class="navbar-brand d-lg-none">Navigation</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item px-5">
+                    <li class="nav-item px-3">
                         <a class="nav-link" href="{% url 'eventastic:index' %}">Home</a>
                     </li>
-                    <li class="nav-item px-5">
+                    <li class="nav-item px-3">
                         <a class="nav-link"
                            href="{% url 'eventastic:categories' %}">Categories</a>
                     </li>
-                    <li class="nav-item px-5">
+                    <li class="nav-item px-3">
                         <a class="nav-link"
                            href="{% url 'eventastic:create_category' %}">Create
                             Category</a>
                     </li>
-                    <li class="nav-item px-5">
+                    <li class="nav-item px-3">
                         <a class="nav-link"
                            href="{% url 'eventastic:create_event' %}">Create
                             Event</a>
                     </li>
-                    <li class="nav-item px-5">
+                    <li class="nav-item px-3">
                         <a class="nav-link"
                            href="{% url 'eventastic:find_users' %}">Find
                             Users</a>
                     </li>
-                    <li class="nav-item px-5">
+                    <li class="nav-item px-3">
                         <a class="nav-link"
                            href="{% url 'eventastic:contact_us' %}">Contact
                             Us</a>
@@ -86,16 +86,16 @@
                       {% if user.is_authenticated %}
                           <button type="button"
                                   onclick="document.location='{% url 'eventastic:logout' %}'"
-                                  class="btn button-custom px-3 m-1">Logout</button>
+                                  class="btn button-custom px-3 border-1 border-dark m-1">Logout</button>
 
                       {% elif request.path != register_url and request.path != login_url %}
                           <button type="button"
                                   onclick="document.location='{{ login_url }}'"
-                                  class="btn button-custom px-3 m-1">Login</button>
+                                  class="btn button-custom px-3 border-1 border-dark m-1">Login</button>
                           <span>or</span>
                           <button type="button"
                                   onclick="document.location='{{ register_url }}'"
-                                  class="btn button-custom px-3 m-1">Register</button>
+                                  class="btn button-custom px-3 border-1 border-dark m-1">Register</button>
 
                       {% endif %}
           </span>
@@ -110,10 +110,14 @@
     </nav>
 
 
-        <div class="border-top border-bottom border-1 border-dark ms-2 d-none d-lg-block" style="width: 20rem; position:fixed;">
+        <div class="border-top border-bottom border-1 border-dark ms-2 sidebar" style="width: 20rem; position:fixed;">
             {% if user.is_authenticated %}
                 <h5>Hello, {{ request.user }}</h5>
             {% endif %}
+
+            {% get_recently_published_events as recently_published_events %}
+            {% get_top_categories as top_categories %}
+            {% get_top_organisers as top_organisers %}
 
             <div class="accordion accordion-flush" id="accordionFlushExample">
                 <div class="accordion-item">
@@ -133,8 +137,8 @@
                         <div class="accordion-body">
                             <ul>
                                 {% for event in recently_published_events %}
-                                    <li>
-                                        {{ event.name }}
+                                    <li class="remove-bullets">
+                                        <a class="sidebar-list" href="{% url 'eventastic:show_event' event.category.slug event.slug %}">{{ event.name }}</a>
                                     </li>
                                 {% endfor %}
                             </ul>
@@ -157,9 +161,9 @@
                          data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                {% for category in most_popular_categories %}
-                                    <li>
-                                        <a href="{% url 'eventastic:show_category' category.slug %}">{{ category.name }}</a>
+                                {% for category in top_categories %}
+                                    <li class="remove-bullets">
+                                        <a class="sidebar-list" href="{% url 'eventastic:show_category' category.slug %}">{{ category.name }}</a>
                                     </li>
                                 {% endfor %}
                             </ul>
@@ -182,9 +186,9 @@
                          data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                {% for user in most_top_organizers %}
-                                    <li>
-                                        <a href="{% url 'eventastic:show_user_events' user.id %}">{{ user.username }}</a>
+                                {% for user in top_organisers %}
+                                    <li class="remove-bullets">
+                                        <a class="sidebar-list" href="{% url 'eventastic:show_user_events' user.user.id %}">{{ user.user }}</a>
                                     </li>
                                 {% endfor %}
                             </ul>

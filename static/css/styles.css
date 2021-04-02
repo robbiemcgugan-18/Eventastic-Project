@@ -26,10 +26,26 @@ a.list:hover {
   text-decoration: underline;
 }
 
-a.list:active {
+a.sidebar-list:link {
+  color: #696969;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a.sidebar-list:visited {
+  color: #696969;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a.sidebar-list:hover {
   color: #000000;
   background-color: transparent;
   text-decoration: underline;
+}
+
+.remove-bullets {
+  list-style-type: none;
 }
 
 .home-container {
@@ -43,7 +59,12 @@ a.list:active {
   .body-block {
     margin-left: 23rem;
     margin-top: 1rem;
-    width: auto;
+    margin-right: 15rem;
+    width: 65%;
+  }
+
+  .sidebar {
+    display: block;
   }
 }
 
@@ -52,6 +73,10 @@ a.list:active {
     margin-left: 1rem;
     margin-top: 1rem;
     width: auto;
+  }
+
+  .sidebar {
+    display: none;
   }
 }
 
@@ -98,8 +123,8 @@ a.list:active {
     cursor: pointer;
 }
 
-#set-width {
-    width: auto;
+#set-event-dimensions {
+    width: 60%;
     height: auto;
 }
 

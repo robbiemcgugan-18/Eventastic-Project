@@ -25,9 +25,9 @@
             {{ user_form.as_p }}
             {{ profile_form.as_p }}
 
-            <input type="submit" name="submit" value="Register"/>
+            <input class="btn button-custom px-3 border-1 border-dark" type="submit" name="submit" value="Register"/>
         </form>
 
-        <div>Already got an Account? <a href="{% url 'eventastic:login' %}">Login Here</a> </div>
+        <div>Already got an Account? <a class="sidebar-list" href="{% url 'eventastic:login' %}">Login Here</a> </div>
     {% endif %}
 {% endblock %}

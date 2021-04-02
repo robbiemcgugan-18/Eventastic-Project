@@ -2,8 +2,8 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    {% if category %}
-        {{ user.user }}
+    {% if requested_user %}
+        {{ requested_user.user }}
     {% else %}
         User Not Found
     {% endif %}
@@ -12,11 +12,14 @@
 {% block body_block %}
     {% if requested_user %}
         <h1>{{ requested_user.user }}</h1>
+        <p class="h5 pt-3">
+          Below are the events organised by {{ requested_user.user }}:
+        </p>
         {% if user_events %}
-            <ul>
+            <ul class="list-group my-4">
                 {% for event in user_events %}
-                    <li>
-                        <a href="{% url 'eventastic:show_event' event.category.slug event.slug %}">{{ event.name }}</a>
+                    <li class="list-group-item h3 m-0 set-background">
+                        <a class="list" href="{% url 'eventastic:show_event' event.category.slug event.slug %}">{{ event.name }}</a>
                     </li>
                 {% endfor %}
             </ul>

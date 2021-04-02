@@ -52,25 +52,25 @@ def generate_data():
 
     # generate multiple event
     # Each event also prepares an image to be placed in event_images
-    aviation_event_1 = Event(name="Plane Spotting", description="Meet up to see the best planes arriving at the airport", start=datetime.datetime(2020, 1, 1), address="Glasgow Airport",postcode="PA3 2TJ", createdBy=profile3, category=aviation_category)
-    aviation_event_2 = Event(name="Air Show 2021", description="RAF is putting on an air show to entertain all ages", start=datetime.datetime(2020, 2, 1), address="Prestwick Airport", postcode="KA9 2PL", createdBy=profile1, category=aviation_category)
-    aviation_event_3 = Event(name="Aircraft Museum Tour", description="Volunteers are organising a guided tour of the nearby museum", start=datetime.datetime(2020, 3, 1), address="East Fortune Airfield", postcode="EH39 5LF", createdBy=profile2, category=aviation_category)
+    aviation_event_1 = Event(name="Plane Spotting", description="Meet up to see the best planes arriving at the airport", startDate=datetime.datetime(2020, 1, 1), startTime=datetime.time(15, 00), address="Glasgow Airport",postcode="PA3 2TJ", createdBy=profile3, category=aviation_category)
+    aviation_event_2 = Event(name="Air Show 2021", description="RAF is putting on an air show to entertain all ages", startDate=datetime.datetime(2020, 2, 1), startTime=datetime.time(15, 00), address="Prestwick Airport", postcode="KA9 2PL", createdBy=profile1, category=aviation_category)
+    aviation_event_3 = Event(name="Aircraft Museum Tour", description="Volunteers are organising a guided tour of the nearby museum", startDate=datetime.datetime(2020, 3, 1), startTime=datetime.time(15, 00), address="East Fortune Airfield", postcode="EH39 5LF", createdBy=profile2, category=aviation_category)
 
     aviation_event_1.picture = ImageFile(open("population_images/event_images/aviation1.jpg", 'rb'))
     aviation_event_2.picture = ImageFile(open("population_images/event_images/aviation2.jpg", 'rb'))
     aviation_event_3.picture = ImageFile(open("population_images/event_images/aviation3.jpg", 'rb'))
 
-    cooking_event_1 = Event(name="Cook Off 2021", description="Competition to see who is the best cook of 2021", start=datetime.datetime(2020, 1, 1), address="8 East Fergus Place, Kirkcaldy",postcode="KY1 1XT", createdBy=profile1, category=cooking_category)
-    cooking_event_2 = Event(name="Masterclass Lesson", description="Learn to cook like one of the best chefs in the country", start=datetime.datetime(2020, 2, 1), address="8 East Fergus Place, Kirkcaldy", postcode="KY1 1XT", createdBy=profile1, category=cooking_category)
-    cooking_event_3 = Event(name="Church Bake Sale", description="Come along to get some delicious home made cakes and biscuits", start=datetime.datetime(2020, 3, 1), address="Eaglesham, Glasgow", postcode="G76 0AR", createdBy=profile2, category=cooking_category)
+    cooking_event_1 = Event(name="Cook Off 2021", description="Competition to see who is the best cook of 2021", startDate=datetime.datetime(2020, 1, 1), startTime=datetime.time(15, 00), address="8 East Fergus Place, Kirkcaldy",postcode="KY1 1XT", createdBy=profile1, category=cooking_category)
+    cooking_event_2 = Event(name="Masterclass Lesson", description="Learn to cook like one of the best chefs in the country", startDate=datetime.datetime(2020, 2, 1), startTime=datetime.time(15, 00), address="8 East Fergus Place, Kirkcaldy", postcode="KY1 1XT", createdBy=profile1, category=cooking_category)
+    cooking_event_3 = Event(name="Church Bake Sale", description="Come along to get some delicious home made cakes and biscuits", startDate=datetime.datetime(2020, 3, 1), startTime=datetime.time(15, 00), address="Eaglesham, Glasgow", postcode="G76 0AR", createdBy=profile2, category=cooking_category)
 
     cooking_event_1.picture = ImageFile(open("population_images/event_images/cooking1.jpg", 'rb'))
     cooking_event_2.picture = ImageFile(open("population_images/event_images/cooking2.jpg", 'rb'))
     cooking_event_3.picture = ImageFile(open("population_images/event_images/cooking3.jpg", 'rb'))
 
-    sport_event_1 = Event(name="Football Meet up", description="Quick meet up to play a game of football", start=datetime.datetime(2020, 1, 1), address="941, Pollokshaws Road, Glasgow",postcode="G41 2EU", createdBy=profile1, category=sport_category)
-    sport_event_2 = Event(name="Tennis Tournament", description="Sign up to prove you are the best tennis player", start=datetime.datetime(2020, 2, 1), address="130 Clyde Street, Glasgow", postcode="G1 4LH", createdBy=profile1, category=sport_category)
-    sport_event_3 = Event(name="Basketball Session", description="Need a few more players to get a good game of basketball", start=datetime.datetime(2020, 3, 1), address="196, Ayr Rd, Newton Mearns, Glasgow", postcode="G77 6DT", createdBy=profile2, category=sport_category)
+    sport_event_1 = Event(name="Football Meet up", description="Quick meet up to play a game of football", startDate=datetime.datetime(2020, 1, 1), startTime=datetime.time(15, 00), address="941, Pollokshaws Road, Glasgow",postcode="G41 2EU", createdBy=profile1, category=sport_category)
+    sport_event_2 = Event(name="Tennis Tournament", description="Sign up to prove you are the best tennis player", startDate=datetime.datetime(2020, 2, 1), startTime=datetime.time(15, 00), address="130 Clyde Street, Glasgow", postcode="G1 4LH", createdBy=profile1, category=sport_category)
+    sport_event_3 = Event(name="Basketball Session", description="Need a few more players to get a good game of basketball", startDate=datetime.datetime(2020, 3, 1), startTime=datetime.time(15, 00), address="196, Ayr Rd, Newton Mearns, Glasgow", postcode="G77 6DT", createdBy=profile2, category=sport_category)
 
     sport_event_1.picture = ImageFile(open("population_images/event_images/sport1.jpg", 'rb'))
     sport_event_2.picture = ImageFile(open("population_images/event_images/sport2.jpg", 'rb'))

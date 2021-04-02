@@ -18,10 +18,10 @@
         Password: <input class="form-control" type="password" name="password"
                          value="" size="50"/>
         <br/>
-        <input type="submit" value="Login"/>
+        <input class="btn button-custom px-3 border-1 border-dark" type="submit" value="Login"/>
     </form>
 
     <div>
-      Not Registered? <a href="{% url 'eventastic:register' %}">Register Here</a>
+      Not Registered? <a class="sidebar-list" href="{% url 'eventastic:register' %}">Register Here</a>
     </div>
 {% endblock %}

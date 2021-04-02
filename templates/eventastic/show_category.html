@@ -15,6 +15,9 @@
         <h1 class="mb-3 text-white">{{ category.name }}</h1>
         <h4 class="mb-3 text-white"><p>{{ category.description }}</p></h4>
       </div>
+      <p class="h5 pt-3">
+        Below are the events in the {{ category.name }} category:
+      </p>
       {% if events %}
         <ul class="list-group mt-4">
           {% for event in events %}

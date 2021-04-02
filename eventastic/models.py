@@ -33,14 +33,15 @@ class UserProfile(models.Model):
 class Event(models.Model):
     name = models.CharField(max_length=30, primary_key=True)
     description = models.CharField(max_length=200)
-    start = models.DateField(default=None)
+    startDate = models.DateField(default=None)
+    startTime = models.TimeField(default=None)
     usersInterested = models.ManyToManyField(UserProfile,blank=True,related_name='interest')
     numberInterested = models.IntegerField(default=0)
     picture = models.ImageField(upload_to='event_images/', blank=True)
     address = models.CharField(max_length=40)
     postcode = models.CharField(max_length=8)
-    averageRating = models.DecimalField(max_digits=3, decimal_places=2,default=0)
     createdBy = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     slug = models.SlugField(unique=True, null=True)
 

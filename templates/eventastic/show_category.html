@@ -19,17 +19,21 @@
         Below are the events in the {{ category.name }} category:
       </p>
       {% if events %}
-        <ul class="list-group mt-4">
+        <ul class="list-group my-4">
           {% for event in events %}
             <li class="list-group-item h3 m-0 set-background">
               <a class="list" href="{% url 'eventastic:show_event' category.slug event.slug %}">{{ event.name }}</a>
             </li>
           {% endfor %}
         </ul>
+
+        <h4>Want to create your own event?</h4>
       {% else %}
         <strong>No events under this category</strong>
+        <h4>Be the first to create an event</h4>
       {% endif %}
     {% else %}
       <strong>The specified category does not exist.</strong>
     {% endif %}
+    <a href="{% url 'eventastic:create_event' %}" class="btn btn-primary" role="button">Create a new Event</a>
 {% endblock %}

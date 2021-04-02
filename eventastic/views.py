@@ -367,12 +367,13 @@ def delete_account(request):
         else:
             messages.error(request, "Invalid Form")
     else:
-        form = DeleteUserForm(request.POST)
+        form = DeleteUserForm()
 
 
     context_dict['form'] = form
 
     return render(request, 'eventastic/delete_account.html', context=context_dict)
+
 
 def contact_us(request):
     context_dict = {}

@@ -45,7 +45,7 @@ class UserProfileForm(forms.ModelForm):
         }
 
         widgets = {
-            'DOB': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD'}),
+            'DOB': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD', 'type': 'date'}),
             'profilePicture': forms.FileInput(attrs={'class': 'form-control'}),
         }
 

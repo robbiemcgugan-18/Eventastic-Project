@@ -15,7 +15,7 @@
         <h1 class="mb-3 text-white">{{ category.name }}</h1>
         <h4 class="mb-3 text-white"><p>{{ category.description }}</p></h4>
       </div>
-      <p class="h5 pt-3">
+      <p class="h4 pt-3">
         Below are the events in the {{ category.name }} category:
       </p>
       {% if events %}
@@ -30,10 +30,10 @@
         <h4>Want to create your own event?</h4>
       {% else %}
         <strong>No events under this category</strong>
-        <h4>Be the first to create an event</h4>
+        <h4 class="mt-2">Be the first to create an event</h4>
       {% endif %}
     {% else %}
       <strong>The specified category does not exist.</strong>
     {% endif %}
-    <a href="{% url 'eventastic:create_event' %}" class="btn btn-primary" role="button">Create a new Event</a>
+    <a href="{% url 'eventastic:create_event' %}" class="btn button-custom px-3 m-1 border-1 border-dark" role="button">Create a new Event</a>
 {% endblock %}

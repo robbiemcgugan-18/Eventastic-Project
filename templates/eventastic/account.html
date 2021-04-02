@@ -9,7 +9,7 @@
 {% block body_block %}
     <h1>Account</h1>
 
-    <div class="m-4 bg-light">
+    <div class="m-4 p-3 bg-light">
         <div class="mb-4">
             <h2 class="fw-bold">Account Details</h2>
             <ul class="list-unstyled">
@@ -37,7 +37,7 @@
                   action="{% url 'eventastic:account' %}">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" value="Change Password"/>
+                <input class="btn button-custom px-3 m-1 border-1 border-dark" type="submit" value="Change Password"/>
             </form>
         </div>
 
@@ -46,12 +46,12 @@
             <h2 class="fw-bold">Delete Account</h2>
             <button type="button"
                     onclick="document.location='{% url 'eventastic:delete_account' %}'"
-                    class="btn btn-danger px-3 m-1">Delete
+                    class="btn btn-danger border-1 border-dark px-3 m-1">Delete
             </button>
         </div>
     </div>
 
-    <div class="m-4 bg-light">
+    <div class="m-4 bg-light p-3">
         <h2 class="fw-bold">Events you are interested in</h2>
         {% if interested_events %}
             <ul class="list-group">
@@ -66,8 +66,8 @@
         {% endif %}
     </div>
 
-    <div class="m-4 bg-light">
-        <h2 class="fw-bold">Organised Events</h2>
+    <div class="m-4 p-3 bg-light">
+        <h2 class="fw-bold">Events you have organised</h2>
         {% if organised_events %}
             <ul class="list-group">
                 {% for event in organised_events %}

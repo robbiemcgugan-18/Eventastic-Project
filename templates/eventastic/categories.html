@@ -7,7 +7,7 @@
 
 {% block body_block %}
     <h1>Categories</h1>
-    <p class="h5 pt-3">
+    <p class="h4 pt-3">
       Take a look at the events in the categories below:
     </p>
     {% if categories %}
@@ -25,5 +25,5 @@
         <p>No Categories are present</p>
     {% endif %}
 
-    <a href="{% url 'eventastic:create_category' %}" class="btn btn-primary" role="button">Create a new Category</a>
+    <a href="{% url 'eventastic:create_category' %}" class="btn button-custom px-3 m-1 border-1 border-dark" role="button">Create a new Category</a>
 {% endblock %}

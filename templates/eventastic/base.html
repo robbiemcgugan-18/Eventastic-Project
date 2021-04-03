@@ -113,7 +113,7 @@
 
         <div class="border-top border-bottom border-1 border-dark ms-2 sidebar" style="width: 20rem; position:fixed;">
             {% if user.is_authenticated %}
-                <h5>Hello, {{ request.user }}</h5>
+                <h5 class="p-2">Hello, {{ request.user }}</h5>
             {% endif %}
 
             {% get_recently_published_events as recently_published_events %}

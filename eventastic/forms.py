@@ -82,10 +82,6 @@ class EventForm(forms.ModelForm):
 
 
 class EditUserForm(forms.ModelForm):
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    email = forms.EmailField()
-
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email',)
@@ -98,8 +94,6 @@ class EditUserForm(forms.ModelForm):
 
 
 class EditProfileForm(forms.ModelForm):
-    DOB = forms.DateField()
-    profilePicture = forms.ImageField()
 
     class Meta:
         model = UserProfile

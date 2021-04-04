@@ -46,7 +46,7 @@ def register(request):
             if 'profilePicture' in request.FILES:
                 profile.profilePicture = request.FILES['profilePicture']
             else:
-                profile.profilePicture = ImageFile(open("default.jpg", 'rb'))
+                profile.profilePicture = ImageFile(open("static/images/default_profile_picture.jpg", 'rb'))
 
             profile.save()
 
@@ -156,7 +156,7 @@ def create_category(request):
             if 'picture' in request.FILES:
                 form_data.picture = request.FILES['picture']
             else:
-                form_data.picture = ImageFile(open("default.jpg", 'rb'))
+                form_data.picture = ImageFile(open("static/images/category_and_event_default.jpg", 'rb'))
 
             form_data.save()
 
@@ -167,7 +167,7 @@ def create_category(request):
 
         # If the form information is not valid display the errors
         else:
-            messages.error(request, forms.errors)
+            messages.error(request, form.errors)
 
     # If the form has not been submitted then render the view onscreen
     return render(request, 'eventastic/create_category.html', context={'form': form})
@@ -254,6 +254,8 @@ def create_event(request):
 
             if 'picture' in request.FILES:
                 form_data.picture = request.FILES['picture']
+            else:
+                form_data.picture = ImageFile(open("static/images/category_and_event_default.jpg", 'rb'))
 
             form_data.save()
 

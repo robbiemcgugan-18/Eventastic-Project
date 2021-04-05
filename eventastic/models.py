@@ -90,4 +90,4 @@ class Comment(models.Model):
     comment = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"{self.username} commented on {self.name} at {self.posted}"
+        return f"{self.username} commented on {self.eventName} at {self.posted}"

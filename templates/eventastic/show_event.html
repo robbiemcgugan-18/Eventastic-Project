@@ -25,7 +25,7 @@
                 </button>
             {% endif %}
             <div>
-                <span class="m-3 text-white">Created By: {{ event.createdBy }}</span>
+                <span class="m-3 text-white">Created By: <a class="text-white" href="{% url 'eventastic:show_user_events' event.createdBy.user.id %}">{{ event.createdBy }}</a></span>
                 <span class="m-3 text-white">Start: {{ event.startDate }} {{ event.startTime }}</span>
                 <span class="m-3 text-white">Location: {{ event.address }} {{ event.postcode }}</span>
             </div>

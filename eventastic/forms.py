@@ -3,7 +3,10 @@ from django.contrib.auth.models import User
 
 from eventastic.models import UserProfile, Category, Event, Comment
 
+# Forms used in the Eventastic Project
+# All the form inputs are styled with the Bootstrap form control class as seen in the widgets
 
+# Form to register a new User (this form takes in data associated with the User Table)
 class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
@@ -23,6 +26,7 @@ class UserForm(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'class': 'form-control'}),
         }
 
+    # Clean this data and raise an error if the two password fields do not match
     def clean(self):
         cleaned_data = super(UserForm, self).clean()
         password = cleaned_data.get("password")
@@ -34,6 +38,7 @@ class UserForm(forms.ModelForm):
             )
 
 
+# Form to register a new User (this form takes in data associated with the UserProfile Table)
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -49,7 +54,7 @@ class UserProfileForm(forms.ModelForm):
             'profilePicture': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
-
+# Form to create a new category in the Eventastic web app
 class CategoryForm(forms.ModelForm):
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
@@ -64,6 +69,7 @@ class CategoryForm(forms.ModelForm):
         }
 
 
+# Form to create a new event in the Eventastic web app
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
@@ -81,6 +87,7 @@ class EventForm(forms.ModelForm):
         }
 
 
+# Form to update details associated with the User Table
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -93,6 +100,7 @@ class EditUserForm(forms.ModelForm):
         }
 
 
+# Form to update details associated with the UserProfile Table
 class EditProfileForm(forms.ModelForm):
 
     class Meta:
@@ -105,6 +113,7 @@ class EditProfileForm(forms.ModelForm):
         }
 
 
+# Form to provide confirmation before deleting an account
 class DeleteUserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -115,6 +124,7 @@ class DeleteUserForm(forms.ModelForm):
         }
 
 
+# Form to add a new comment to an existing event
 class AddCommentForm(forms.ModelForm):
     class Meta:
         model = Comment

@@ -20,16 +20,14 @@
         <div class="row row-cols-3">
             {% for event in top_events %}
                 <div class="col">
-                    <div class="card m-2" style="height:auto;">
-                        <img src="{{ event.picture.url }}" height="250rem"
-                             class="card-img-top">
-                        <div class="card-body">
+                    <div class="card m-2">
+                        <img src="{{ event.picture.url }}" height="250rem" class="card-img-top">
+                        <div class="card-body text-center">
                             <h5 class="card-title">{{ event.name }}</h5>
                             <p class="card-text">{{ event.description }}</p>
                             <p class="card-text">Users Interested: {{ event.numberInterested }}</p>
                             <hr />
-                            <a href="{% url 'eventastic:show_event' event.category.slug event.slug %}"
-                               class="btn button-custom px-3 m-1 border-1 border-dark">More Info</a>
+                            <a href="{% url 'eventastic:show_event' event.category.slug event.slug %}" class="btn button-custom px-3 m-1 border-1 border-dark">More Info</a>
                         </div>
                     </div>
                 </div>

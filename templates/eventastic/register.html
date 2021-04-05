@@ -10,15 +10,11 @@
 
     {% if registered %}
         <strong>Thank you for registering with Eventastic!</strong>
-        <button type="button"
-                onclick="document.location='{% url 'eventastic:index' %}'"
-                class="btn btn-info px-3 m-1">Return to Homepage
+        <button type="button" onclick="document.location='{% url 'eventastic:index' %}'" class="btn btn-info px-3 m-1">Return to Homepage
         </button>
 
     {% else %}
-        <form id="user_form" method="post"
-              action="{% url 'eventastic:register' %}"
-              enctype="multipart/form-data">
+        <form id="user_form" method="post" action="{% url 'eventastic:register' %}" enctype="multipart/form-data">
 
             {% csrf_token %}
 

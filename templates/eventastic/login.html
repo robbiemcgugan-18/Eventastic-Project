@@ -9,14 +9,14 @@
     <h1>Login</h1>
 
     {% if error_message %}
-      {{ error_message }}
+      <p class="my-2">
+        {{ error_message }}
+      </p>
     {% endif %}
     <form id="login_form" method="post" action="{% url 'eventastic:login' %}">
         {% csrf_token %}
-        Username: <input class="form-control" type="text" name="username"
-                         value="" size="50"/>
-        Password: <input class="form-control" type="password" name="password"
-                         value="" size="50"/>
+        Username: <input class="form-control" type="text" name="username" value="" size="50"/>
+        Password: <input class="form-control" type="password" name="password" value="" size="50"/>
         <br/>
         <input class="btn button-custom px-3 border-1 border-dark" type="submit" value="Login"/>
     </form>

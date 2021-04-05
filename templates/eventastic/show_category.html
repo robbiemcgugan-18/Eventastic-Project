@@ -11,6 +11,7 @@
 
 {% block body_block %}
     {% if category %}
+      <!-- Inline styling so context can be used to display event picture as background picture -->
       <div id="set-category-dimensions" class="p-5 text-center bg-light page-header d-inline-block" style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{ category.picture.url }});">
         <h1 class="mb-3 text-white">{{ category.name }}</h1>
         <h4 class="mb-3 text-white"><p>{{ category.description }}</p></h4>

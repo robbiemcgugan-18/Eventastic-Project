@@ -24,17 +24,15 @@
                 <li>{% get_user_profile_pic request.user.id %}</li>
             </ul>
 
-            <button type="button"
-                    onclick="document.location='{% url 'eventastic:edit_account' %}'"
-                    class="btn button-custom px-3 m-1 border-1 border-dark">Update Details
+            <button type="button" onclick="document.location='{% url 'eventastic:edit_account' %}'" class="btn button-custom px-3 m-1 border-1 border-dark">
+              Update Details
             </button>
         </div>
 
         <div class="mt-4 mb-4">
             <hr/>
             <h2 class="fw-bold">Change Password</h2>
-            <form id="change_password" method="post"
-                  action="{% url 'eventastic:account' %}">
+            <form id="change_password" method="post" action="{% url 'eventastic:account' %}">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input class="btn button-custom px-3 m-1 border-1 border-dark" type="submit" value="Change Password"/>
@@ -44,9 +42,8 @@
         <div class="mt-4">
             <hr/>
             <h2 class="fw-bold">Delete Account</h2>
-            <button type="button"
-                    onclick="document.location='{% url 'eventastic:delete_account' %}'"
-                    class="btn btn-danger border-1 border-dark px-3 m-1">Delete
+            <button type="button" onclick="document.location='{% url 'eventastic:delete_account' %}'" class="btn btn-danger border-1 border-dark px-3 m-1">
+              Delete
             </button>
         </div>
     </div>

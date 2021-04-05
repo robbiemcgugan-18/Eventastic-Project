@@ -7,24 +7,21 @@
 
 {% block body_block %}
     <div>
-        <div id="set-event-dimensions"
-             class="p-5 text-center bg-light page-header d-inline-block"
-             style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{ event.picture.url }});">
+        <!-- Inline styling so context can be used to display event picture as background picture -->
+        <div id="set-event-dimensions" class="p-5 text-center bg-light page-header d-inline-block" style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{ event.picture.url }});">
             <h1 class="mb-3 text-white">{{ event.name }}</h1>
-            <h4 class="mb-3 text-white" style="word-wrap: break-word"><p>{{ event.description }}</p></h4>
+            <h4 class="mb-3 text-white stop-overflow"><p>{{ event.description }}</p></h4>
             {% if user.is_authenticated %}
-                <button id="interest-button"
-                        class="btn btn-outline-light btn-lg mb-3"
-                        value="{{ event.name }}"
-                        url="{% url 'eventastic:interest' %}"
-                        {% if is_interested %} style="background-color:white; color:black" {% endif %}
-                        type="button">
-                        {% if is_interested %} Interested {% else %} Register Interest {% endif %}</button>
+                <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" value="{{ event.name }}" url="{% url 'eventastic:interest' %}" {% if is_interested %} style="background-color:white; color:black" {% endif %} type="button">
+                  {% if is_interested %}
+                    Interested
+                  {% else %}
+                    Register Interest
+                  {% endif %}
+                </button>
             {% else %}
-                <button id="interest-button"
-                        class="btn btn-outline-light btn-lg mb-3"
-                        onclick="document.location='{% url 'eventastic:login' %}'"
-                        type="button">Register Interest
+                <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" onclick="document.location='{% url 'eventastic:login' %}'" type="button">
+                  Register Interest
                 </button>
             {% endif %}
             <div>
@@ -37,16 +34,13 @@
             </div>
         </div>
 
-        <div id='map' class="d-inline-block" style='width: 30rem; height: 21rem; vertical-align: top'></div>
+        <div id='map' class="d-inline-block"></div>
     </div>
 
     <div class="mt-5">
         <h1 class="fw-bold">Comments</h1>
-        <form id="set-event-dimensions" method="post"
-              action="{% url 'eventastic:show_event' event.category.slug event.slug %}"
-              enctype="multipart/form-data">
+        <form id="set-event-dimensions" method="post" action="{% url 'eventastic:show_event' event.category.slug event.slug %}" enctype="multipart/form-data">
             {% csrf_token %}
-
             {{ form.as_p }}
 
             <input class="btn button-custom px-3 m-1 border-1 border-dark" type="submit" name="submit" value="Add Comment"/>
@@ -60,7 +54,7 @@
                              width=60rem height=60rem
                              class="rounded-circle p-2"/>
                         <strong><h4>{{ comment.username }}</h4>
-                            <span>- {{ comment.posted }}</span></strong> <br>
+                        <span>- {{ comment.posted }}</span></strong> <br />
                         <p class="m-2">{{ comment.comment }}</p>
                     </div>
                 {% endfor %}
@@ -68,30 +62,40 @@
         </div>
     </div>
 
+    <!-- Javascript required for the map to work -->
     <script>
         mapboxgl.accessToken = 'pk.eyJ1Ijoicm9iYmllbWNndWdhbiIsImEiOiJja212MW92a3owMHV6MnduMW1lOW9hcmozIn0.c1uIywPkB2utua5INvv4Cw';
+        // Initialises map
         var map = new mapboxgl.Map({
+            // Stores it in the div container with id 'map'
             container: 'map',
+            // Set the stule using MapBox external styles
             style: 'mapbox://styles/mapbox/streets-v11',
+            // Set the center of the map to the location of the event
             center: [{{ longitude }}, {{ latitude }}],
+            // Zoom out moderately
             zoom: 9
         });
 
+        // JSON data that puts a point on the map corresponding with the location of the event
         var geojson = {
             type: 'FeatureCollection',
             features: [{
                 type: 'Feature',
                 geometry: {
+                    // Make our marker a point on the map
                     type: 'Point',
+                    // Set the coordinates on the map to the values obtained from geopy in the show_event view
                     coordinates: [{{ longitude }}, {{ latitude }}]
                 },
                 properties: {
-                    title: 'Mapbox',
-                    description: 'Washington, D.C.'
+                    title: 'Event',
+                    description: 'Eventastic Event'
                 }
             }]
         };
 
+        // Adds all the features in geojson to the map. In our case just the one.
         geojson.features.forEach(function (marker) {
 
             // create a HTML element for each feature

@@ -114,12 +114,12 @@ def generate_data():
     cooking_event_3.save()
 
     # generate comment
-    Comment(name=cooking_event_1, username=profile1, comment="I can't wait, this looks very fun").save()
-    Comment(name=cooking_event_1, username=profile2, comment="This one isn't for me").save()
-    Comment(name=aviation_event_2, username=profile2, comment="This looks OK, the location is quite hard to get to.").save()
-    Comment(name=cooking_event_2, username=profile2, comment="I am so excited for this one, it will make my week").save()
-    Comment(name=aviation_event_2, username=profile3, comment="I've loved this all my life, so glad I've found people who also share the same interest").save()
-    Comment(name=sport_event_3, username=profile2, comment="Can't wait for a little workout").save()
+    Comment(eventName=cooking_event_1, username=profile1, comment="I can't wait, this looks very fun").save()
+    Comment(eventName=cooking_event_1, username=profile2, comment="This one isn't for me").save()
+    Comment(eventName=aviation_event_2, username=profile2, comment="This looks OK, the location is quite hard to get to.").save()
+    Comment(eventName=cooking_event_2, username=profile2, comment="I am so excited for this one, it will make my week").save()
+    Comment(eventName=aviation_event_2, username=profile3, comment="I've loved this all my life, so glad I've found people who also share the same interest").save()
+    Comment(eventName=sport_event_3, username=profile2, comment="Can't wait for a little workout").save()
 
 
 if __name__ == "__main__":

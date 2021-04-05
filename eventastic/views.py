@@ -233,7 +233,7 @@ def show_event(request, category_name_slug, event_name_slug):
         context_dict['is_interested'] = False
 
     # Create a locator using the geopy external library
-    locator = Nominatim(user_agent="myGeocoder")
+    locator = Nominatim(user_agent="eventastic")
 
     try:
         # Get the location data about the postcode of the current event

@@ -12,8 +12,6 @@ $(document).on('click', '#interest-button', function (e) {
         },
         success: function (json) {
             document.getElementById("interest-counter").innerHTML = json.result
-            var cssLiked = "#{background-color:white; color:black}";
-            var cssUnliked = "{background-color:transparent; color:white}";
 
             if (json.liked) {
                 document.getElementById("interest-button").style.backgroundColor = "white";
@@ -25,8 +23,5 @@ $(document).on('click', '#interest-button', function (e) {
                 document.getElementById("interest-button").innerHTML = "Register Interest";
             }
         },
-        error: function (xhr, errmsg, err) {
-
-        }
     });
 })

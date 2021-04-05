@@ -56,7 +56,7 @@ def register(request):
                 profile.profilePicture = request.FILES['profilePicture']
             # Else use the default profile picture
             else:
-                profile.profilePicture = ImageFile(open("static/images/default_profile_picture.jpg", 'rb'))
+                profile.profilePicture = ImageFile(open("media/profile_images/default_profile_picture.jpg", 'rb'))
 
             # Finalise the changes to the user profile
             profile.save()
@@ -181,7 +181,7 @@ def create_category(request):
             if 'picture' in request.FILES:
                 form_data.picture = request.FILES['picture']
             else:
-                form_data.picture = ImageFile(open("static/images/category_and_event_default.jpg", 'rb'))
+                form_data.picture = ImageFile(open("media/category_images/category_and_event_default.jpg", 'rb'))
 
             form_data.save()
 
@@ -313,7 +313,7 @@ def create_event(request):
             if 'picture' in request.FILES:
                 form_data.picture = request.FILES['picture']
             else:
-                form_data.picture = ImageFile(open("static/images/category_and_event_default.jpg", 'rb'))
+                form_data.picture = ImageFile(open("media/event_images/category_and_event_default.jpg", 'rb'))
 
             form_data.save()
 

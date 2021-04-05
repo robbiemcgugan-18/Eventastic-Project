@@ -367,8 +367,10 @@ def account(request):
             updated_password = form.save()
             # Update the password hash
             update_session_auth_hash(request, updated_password)
-            # Redirect the user back to the account page
-            return redirect('eventastic:account')
+            # Log the user out
+            logout(request)
+            # Redirect the user back to the home page
+            return redirect('eventastic:index')
 
         else:
             # If the form is not valid then display an error message

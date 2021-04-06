@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
+    <!-- Welcome Text -->
     <p class="h1 text-center fw-bold">
       Welcome to Eventastic, the home of all types of events!
     </p>
@@ -18,6 +19,7 @@
     <h2 class="text-center">Top Events</h1>
     <div class="container">
         <div class="row row-cols-3">
+            <!-- The 9 events with the most users interested -->
             {% for event in top_events %}
                 <div class="col">
                     <div class="card m-2">

@@ -9,6 +9,7 @@
 {% block body_block %}
     <h1>Account</h1>
 
+    <!-- Current account details -->
     <div class="m-4 p-3 bg-light">
         <div class="mb-4">
             <h2 class="fw-bold">Account Details</h2>
@@ -24,11 +25,13 @@
                 <li>{% get_user_profile_pic request.user.id %}</li>
             </ul>
 
+            <!-- Update Details button -->
             <button type="button" onclick="document.location='{% url 'eventastic:edit_account' %}'" class="btn button-custom px-3 m-1 border-1 border-dark">
               Update Details
             </button>
         </div>
 
+        <!-- Change password form -->
         <div class="mt-4 mb-4">
             <hr/>
             <h2 class="fw-bold">Change Password</h2>
@@ -39,6 +42,7 @@
             </form>
         </div>
 
+        <!-- Delete password button -->
         <div class="mt-4">
             <hr/>
             <h2 class="fw-bold">Delete Account</h2>
@@ -48,6 +52,7 @@
         </div>
     </div>
 
+    <!-- Events user is interested in -->
     <div class="m-4 bg-light p-3">
         <h2 class="fw-bold">Events you are interested in</h2>
         {% if interested_events %}
@@ -63,6 +68,7 @@
         {% endif %}
     </div>
 
+    <!-- Events the user has organised -->
     <div class="m-4 p-3 bg-light">
         <h2 class="fw-bold">Events you have organised</h2>
         {% if organised_events %}

@@ -7,6 +7,12 @@
 
 {% block body_block %}
     <h1>Delete Account</h1>
+
+    {% if error_message %}
+      <p class="my-2">
+        {{ error_message }}
+      </p>
+    {% endif %}
     <form id="delete_form" method="post" action="{% url 'eventastic:delete_account' %}" enctype="multipart/form-data">
         {% csrf_token %}
 

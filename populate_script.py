@@ -10,7 +10,7 @@ django.setup()
 
 from eventastic.models import User, UserProfile, Category, Event, Comment
 
-
+# Clear the existing database
 def clear_db():
     UserProfile.objects.filter().delete()
     User.objects.filter().delete()
@@ -18,7 +18,7 @@ def clear_db():
 
 
 def generate_data():
-    # generate 3 user
+    # generate 3 users
     user1 = User(username="john46", first_name="John", last_name="Doe", email="john@example.com")
     user2 = User(username="mary95", first_name="Mary", last_name="Smith", email="mary@example.com")
     user3 = User(username="kate25", first_name="Kate", last_name="McDonald", email="kate@example.com")
@@ -27,7 +27,7 @@ def generate_data():
         user_ins.set_password("default123")
         user_ins.save()
 
-    # generate 3 user profile
+    # generate 3 user profiles
     profile1 = UserProfile(user=user1, DOB=datetime.datetime(1990, 5, 18))
     profile2 = UserProfile(user=user2, DOB=datetime.datetime(1995, 12, 1))
     profile3 = UserProfile(user=user3, DOB=datetime.datetime(2000, 1, 31))
@@ -38,21 +38,22 @@ def generate_data():
 
     for profile_ins in [profile1, profile2, profile3]:
         profile_ins.save()
-    # generate multiple category
+
+    # generate multiple categories
     # Prepare an image for each category and place it in category_images
     aviation_category = Category(name="Aviation", description="Here is Aviation description")
     cooking_category = Category(name="Cooking", description="Here is Cooking description")
     sport_category = Category(name="Sport", description="Here is Bake Sales description")
 
-    aviation_category.picture = ImageFile(open("media/category_images/aviation.jpg", 'rb'))
-    cooking_category.picture = ImageFile(open("media/category_images/cooking.jpg", 'rb'))
-    sport_category.picture = ImageFile(open("media/category_images/sport.jpg", 'rb'))
+    aviation_category.picture = ImageFile(open("media/category_images/media/aviation.jpg", 'rb'))
+    cooking_category.picture = ImageFile(open("media/category_images/media/cooking.jpg", 'rb'))
+    sport_category.picture = ImageFile(open("media/category_images/media/sport.jpg", 'rb'))
 
     aviation_category.save()
     cooking_category.save()
     sport_category.save()
 
-    # generate multiple event
+    # generate multiple events
     # Each event also prepares an image to be placed in event_images
     aviation_event_1 = Event(name="Plane Spotting", description="Meet up to see the best planes arriving at the airport", startDate=datetime.datetime(2020, 1, 1), startTime=datetime.time(15, 00), address="Glasgow Airport",postcode="PA3 2TJ", createdBy=profile3, category=aviation_category)
     aviation_event_2 = Event(name="Air Show 2021", description="RAF is putting on an air show to entertain all ages", startDate=datetime.datetime(2020, 2, 1), startTime=datetime.time(15, 00), address="Prestwick Airport", postcode="KA9 2PL", createdBy=profile1, category=aviation_category)
@@ -90,7 +91,7 @@ def generate_data():
     sport_event_2.save()
     sport_event_3.save()
 
-    # user interested m2m many to many
+    # Add users to the many to many fields
     cooking_event_1.usersInterested.add(profile1)
     cooking_event_1.usersInterested.add(profile2)
     cooking_event_1.usersInterested.add(profile3)
@@ -113,7 +114,7 @@ def generate_data():
     sport_event_1.save()
     cooking_event_3.save()
 
-    # generate comment
+    # Generate Comments
     Comment(eventName=cooking_event_1, username=profile1, comment="I can't wait, this looks very fun").save()
     Comment(eventName=cooking_event_1, username=profile2, comment="This one isn't for me").save()
     Comment(eventName=aviation_event_2, username=profile2, comment="This looks OK, the location is quite hard to get to.").save()

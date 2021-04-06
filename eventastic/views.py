@@ -56,7 +56,7 @@ def register(request):
                 profile.profilePicture = request.FILES['profilePicture']
             # Else use the default profile picture
             else:
-                profile.profilePicture = ImageFile(open("media/profile_images/default_profile_picture.jpg", 'rb'))
+                profile.profilePicture = ImageFile(open("static/images/default_profile_picture.jpg", 'rb'))
 
             # Finalise the changes to the user profile
             profile.save()
@@ -181,7 +181,7 @@ def create_category(request):
             if 'picture' in request.FILES:
                 form_data.picture = request.FILES['picture']
             else:
-                form_data.picture = ImageFile(open("media/category_images/category_and_event_default.jpg", 'rb'))
+                form_data.picture = ImageFile(open("static/images/category_and_event_default.jpg", 'rb'))
 
             form_data.save()
 
@@ -313,7 +313,7 @@ def create_event(request):
             if 'picture' in request.FILES:
                 form_data.picture = request.FILES['picture']
             else:
-                form_data.picture = ImageFile(open("media/event_images/category_and_event_default.jpg", 'rb'))
+                form_data.picture = ImageFile(open("static/images/category_and_event_default.jpg", 'rb'))
 
             form_data.save()
 
@@ -452,8 +452,8 @@ This view renders the page and form that allows the user to delete their account
 """
 @login_required
 def delete_account(request):
-    # Define empty context dictionary
-    context_dict = {}
+    # Define the context dictionary with an empty error message
+    context_dict = {'error_message': None}
 
     # If the method is POST (form has been submitted) the form will be processed
     if request.method == 'POST':
@@ -477,11 +477,11 @@ def delete_account(request):
 
             else:
                 # If the user account is disabled display error message
-                messages.error(request, "Account is Disabled")
+                context_dict['error_message'] = "Account is disabled"
 
         else:
             # If the user does not exist (incorrect password) display an error message
-            messages.error(request, "Invalid Form")
+            context_dict['error_message'] = "Password is incorrect"
     else:
         # If the user has not submitted the form then create an empty form
         form = DeleteUserForm()
@@ -529,7 +529,7 @@ def interest(request):
             # Save the updated information
             event.save()
             # Set liked to False (user is now no longer interested)
-            liked = False
+            interested = False
 
         # If the user was not interested before clicking the button
         else:
@@ -542,11 +542,11 @@ def interest(request):
             # Save the updated information
             event.save()
             # Set liked to True (user is now interested)
-            liked = True
+            interested = True
 
         # Return the new number of users interested and a boolean value indicating if the user is interested
         # as a JSON response
-        return JsonResponse({'result': result, 'liked': liked, })
+        return JsonResponse({'result': result, 'interested': interested, })
 
 """
 This view renders the page that displays all the users registered on Eventastic onscreen

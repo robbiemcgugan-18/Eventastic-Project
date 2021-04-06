@@ -66,14 +66,36 @@ def create_event_object():
     event.save()
     return event
 
+def create_and_login_user(self):
+    """
+    Helper function to create and log in a new user
+    Used to post forms that contain the @login_required decorator
+    """
+    user_data = {'username': 'testuser', 'first_name': 'test', 'last_name': 'user', 'email': 'test@test.com', 'password': 'test123', 'confirm_password': 'test123'}
+    user_profile_data = {'DOB': '1995-01-01', 'profilePicture': tempfile.NamedTemporaryFile(suffix=".jpg").name}
+    data = {**user_data, **user_profile_data}
+    self.client.post(reverse('eventastic:register'), data=data)
+
+    login_data = {'username': 'testuser', 'password': 'test123'}
+    self.client.post(reverse('eventastic:login'), data=login_data)
+
+"""
+Tests each of the Views in views.py
+"""
 class ViewsTests(TestCase):
 
+    """
+    Set up the data
+    """
     def setUp(self):
         self.views_module = importlib.import_module('eventastic.views')
         self.views_module_listing = dir(self.views_module)
 
         self.project_urls_module = importlib.import_module('eventastic.urls')
 
+    """
+    Check all the views exist and are callable
+    """
     def test_views_exist(self):
         """
         Checks the index view exists and is callable
@@ -219,6 +241,9 @@ class ViewsTests(TestCase):
         show_user_events_callable = callable(self.views_module.show_user_events)
         self.assertTrue(show_user_events_callable, f"{FAILURE_HEADER}The show_user_events() view for eventastic isn't callable.{FAILURE_FOOTER}")
 
+    """
+    Test that all the views have the correct URL mapping
+    """
     def test_url_mapping(self):
         index_mapping_exists = False
         register_mapping_exists = False
@@ -320,8 +345,14 @@ class ViewsTests(TestCase):
         self.assertTrue(show_user_events_mapping_esists, f"{FAILURE_HEADER}The show_user_events URL mapping could not be found.{FAILURE_FOOTER}")
         self.assertEquals(reverse('eventastic:show_user_events', kwargs={'user_slug': 'test'}), '/eventastic/find-users/test/', f"{FAILURE_HEADER}The show_user_events URL lookup failed.{FAILURE_FOOTER}")
 
+"""
+Test all the models in models.py
+"""
 class ModelTests(TestCase):
 
+    """
+    Test UserProfile table exists and contains the correct number of fields and field types
+    """
     def test_userprofile(self):
         self.assertTrue('UserProfile' in dir(eventastic.models))
 
@@ -354,6 +385,9 @@ class ModelTests(TestCase):
         self.assertEqual(found_count, len(expected_attributes.keys()), f"{FAILURE_HEADER}In the UserProfile model, we found {found_count} attributes, but were expecting {len(expected_attributes.keys())}.{FAILURE_FOOTER}")
         user_profile.save()
 
+    """
+    Test Event table exists and contains the correct number of fields and field types
+    """
     def test_event(self):
         self.assertTrue('Event' in dir(eventastic.models))
 
@@ -400,6 +434,9 @@ class ModelTests(TestCase):
         self.assertEqual(found_count, len(expected_attributes.keys()), f"{FAILURE_HEADER}In the Event model, we found {found_count} attributes, but were expecting {len(expected_attributes.keys())}.{FAILURE_FOOTER}")
         event.save()
 
+    """
+    Test Category table exists and contains the correct number of fields and field types
+    """
     def test_category(self):
         self.assertTrue('Category' in dir(eventastic.models))
 
@@ -432,6 +469,9 @@ class ModelTests(TestCase):
         self.assertEqual(found_count, len(expected_attributes.keys()), f"{FAILURE_HEADER}In the Event model, we found {found_count} attributes, but were expecting {len(expected_attributes.keys())}.{FAILURE_FOOTER}")
         category.save()
 
+    """
+    Test Comment table exists and contains the correct number of fields and field types
+    """
     def test_comment(self):
         self.assertTrue('Comment' in dir(eventastic.models))
 
@@ -475,8 +515,14 @@ class ModelTests(TestCase):
         self.assertEqual(found_count, len(expected_attributes.keys()), f"{FAILURE_HEADER}In the Event model, we found {found_count} attributes, but were expecting {len(expected_attributes.keys())}.{FAILURE_FOOTER}")
         comment.save()
 
+"""
+Tests the form to register a new user
+"""
 class RegisterFormTests(TestCase):
 
+    """
+    Tests that an error is displayed if empty registration form is submitted
+    """
     def test_empty_registration_post_response(self):
         """
         Checks the POST response of the registration view.
@@ -487,6 +533,9 @@ class RegisterFormTests(TestCase):
 
         self.assertTrue('<ul class="errorlist">' in content)
 
+    """
+    Tests that a user account is created when good data is submitted
+    """
     def test_good_form_creation(self):
         """
         Tests the functionality of the forms.
@@ -514,6 +563,9 @@ class RegisterFormTests(TestCase):
         self.assertEqual(len(eventastic.models.UserProfile.objects.all()), 1, f"{FAILURE_HEADER}We were expecting to see a UserProfile object created, but it didn't appear.{FAILURE_FOOTER}")
         self.assertTrue(self.client.login(username='testuser', password='test123'), f"{FAILURE_HEADER}We couldn't log our sample user in during the tests.{FAILURE_FOOTER}")
 
+    """
+    Tests that an error is displayed if a user tries to register with an already existing username
+    """
     def test_duplicate_username(self):
         """
         Tests the functionality of the forms.
@@ -532,6 +584,9 @@ class RegisterFormTests(TestCase):
 
         self.assertTrue('<ul class="errorlist">' in content)
 
+    """
+    Tests that an error is displayed if a user submits an invalid date i.e 50th June 1990
+    """
     def test_invalid_date(self):
         user_data = {'username': 'testuser', 'first_name': 'test', 'last_name': 'user', 'email': 'test@test.com', 'password': 'test123', 'confirm_password': 'test123'}
         user_profile_data = {'DOB': '1995-50-50', 'profilePicture': tempfile.NamedTemporaryFile(suffix=".jpg").name}
@@ -543,6 +598,9 @@ class RegisterFormTests(TestCase):
 
         self.assertTrue('<ul class="errorlist">' in content)
 
+    """
+    Tests that an error is displayed if a user submits two non matching passwords
+    """
     def test_non_matching_passwords(self):
         user_data = {'username': 'testuser', 'first_name': 'test', 'last_name': 'user', 'email': 'test@test.com', 'password': 'test123', 'confirm_password': 'default'}
         user_profile_data = {'DOB': '1995-01-01', 'profilePicture': tempfile.NamedTemporaryFile(suffix=".jpg").name}
@@ -554,6 +612,9 @@ class RegisterFormTests(TestCase):
 
         self.assertRaises(django_forms.ValidationError)
 
+    """
+    Tests that an error is displayed if a user submits an invalid email i.e doesn't include an '@' and .com, .org, etc.
+    """
     def test_invalid_email(self):
         user_data = {'username': 'testuser', 'first_name': 'test', 'last_name': 'user', 'email': 'test', 'password': 'test123', 'confirm_password': 'test123'}
         user_profile_data = {'DOB': '1995-01-01', 'profilePicture': tempfile.NamedTemporaryFile(suffix=".jpg").name}
@@ -565,7 +626,13 @@ class RegisterFormTests(TestCase):
 
         self.assertTrue('<ul class="errorlist">' in content)
 
+"""
+Tests the form that logs in a user
+"""
 class LoginFormTests(TestCase):
+    """
+    Tests that an error is displayed if an empty form is submitted
+    """
     def test_empty_login_form(self):
         """
         Checks the POST response of the registration view.
@@ -576,6 +643,9 @@ class LoginFormTests(TestCase):
 
         self.assertTrue('Username or Password is incorrect' in content)
 
+    """
+    Tests that the user is successfully logged in when good data is submitted
+    """
     def test_good_login_form(self):
 
         user_profile = create_user_profile_object()
@@ -586,6 +656,10 @@ class LoginFormTests(TestCase):
 
         self.assertEqual(request.status_code, 302)
 
+
+    """
+    Tests that an error is displayed if a user submits an invalid username but valid password
+    """
     def test_bad_username(self):
 
         user_profile = create_user_profile_object()
@@ -597,6 +671,9 @@ class LoginFormTests(TestCase):
 
         self.assertTrue('Username or Password is incorrect' in content)
 
+    """
+    Tests that an error is displayed if a user submits an invalid password but valid username
+    """
     def test_bad_password(self):
 
         user_profile = create_user_profile_object()
@@ -608,29 +685,289 @@ class LoginFormTests(TestCase):
 
         self.assertTrue('Username or Password is incorrect' in content)
 
+"""
+Tests the form that creates a new category
+"""
 class CategoryFormTests(TestCase):
+    """
+    Tests that a category is created when good data is submitted
+    """
     def test_good_category_form(self):
+        create_and_login_user(self)
+
         category_data = {'name': 'category', 'description': 'description1', 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name}
+        total_categories = eventastic.models.Category.objects.all().count()
 
         request = self.client.post(reverse('eventastic:create_category'), data=category_data)
 
         self.assertEqual(request.status_code, 302)
+        self.assertEqual(eventastic.models.Category.objects.all().count(), total_categories+1)
+
+    """
+    Tests that an error is displayed if the user attempts to create a category with a name that already exists
+    """
+    def test_duplicate_name(self):
+        create_and_login_user(self)
+
+        category_data = {'name': 'category', 'description': 'description1', 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name}
+        request = self.client.post(reverse('eventastic:create_event'), data=category_data)
+        request = self.client.post(reverse('eventastic:create_event'), data=category_data)
+
+        content = request.content.decode('utf-8')
+
+        self.assertTrue('<ul class="errorlist">' in content)
 
 
+"""
+Tests the form that creates a new event
+"""
 class EventFormTests(TestCase):
+    """
+    Tests that a category is created when good data is submitted
+    """
     def test_good_event_form(self):
-        event_data = {'name': 'category', 'description': 'description1', 'startDate': '2021-03-01', 'startTime': '10:00', 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name, 'address': 'address', 'postcode': '000000', 'category': create_category_object(), 'createdBy': create_user_profile_object()}
+        create_and_login_user(self)
+
+        event_data = {'name': 'event', 'description': 'description1', 'startDate': '2021-03-01', 'startTime': '10:00', 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name, 'address': 'address', 'postcode': '000000', 'category': create_category_object(), 'createdBy': create_user_profile_object()}
+        total_events = eventastic.models.Event.objects.all().count()
 
         request = self.client.post(reverse('eventastic:create_event'), data=event_data)
 
         self.assertEqual(request.status_code, 302)
+        self.assertEqual(eventastic.models.Event.objects.all().count(), total_events+1)
 
+    """
+    Tests that an error is displayed if the user submits an invalid date i.e. 50th June 1990
+    """
     def test_bad_date(self):
-        event_data = {'name': 'category', 'description': 'description1', 'startDate': '2021-50-50', 'startTime': '10:00', 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name, 'address': 'address', 'postcode': '000000', 'category': create_category_object(), 'createdBy': create_user_profile_object()}
+        create_and_login_user(self)
+
+        event_data = {'name': 'event', 'description': 'description1', 'startDate': '2021-50-50', 'startTime': '10:00', 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name, 'address': 'address', 'postcode': '000000', 'category': create_category_object(), 'createdBy': create_user_profile_object()}
 
         request = self.client.post(reverse('eventastic:create_event'), data=event_data)
         content = request.content.decode('utf-8')
 
-        print(content)
+        self.assertTrue('<ul class="errorlist">' in content)
+
+    """
+    Tests that an error is displayed if the user submits an invalid time i.e. 30:00
+    """
+    def test_bad_time(self):
+        create_and_login_user(self)
+
+        event_data = {'name': 'event', 'description': 'description1', 'startDate': '2021-01-01', 'startTime': '30:00', 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name, 'address': 'address', 'postcode': '000000', 'category': create_category_object(), 'createdBy': create_user_profile_object()}
+
+        request = self.client.post(reverse('eventastic:create_event'), data=event_data)
+        content = request.content.decode('utf-8')
 
         self.assertTrue('<ul class="errorlist">' in content)
+
+    """
+    Tests that an error is displayed if the user attempts to create an event with a name that already exists
+    """
+    def test_duplicate_name(self):
+        create_and_login_user(self)
+
+        event_data = {'name': 'event', 'description': 'description1', 'startDate': '2021-01-01', 'startTime': '30:00', 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name, 'address': 'address', 'postcode': '000000', 'category': create_category_object(), 'createdBy': create_user_profile_object()}
+        request = self.client.post(reverse('eventastic:create_event'), data=event_data)
+        request = self.client.post(reverse('eventastic:create_event'), data=event_data)
+
+        content = request.content.decode('utf-8')
+
+        self.assertTrue('<ul class="errorlist">' in content)
+
+"""
+Tests the interest button on show_event.html
+"""
+class InterestButtonTests(TestCase):
+    """
+    Tests that if the button is clicked then the number of interested users increases by 1
+    and if it is cicked again it decreases back to 0
+    """
+    def test_user_interest(self):
+        create_and_login_user(self)
+        event = create_event_object()
+
+        response = self.client.get(reverse("eventastic:interest"), data={"action": "get", "name": "event1"})
+        self.assertEqual(event.usersInterested.count(), 1)
+        response = self.client.get(reverse("eventastic:interest"), data={"action": "get", "name": "event1"})
+        self.assertEqual(event.usersInterested.count(), 0)
+
+"""
+Tests the form that changes the current password
+"""
+class ChangePasswordTests(TestCase):
+    """
+    Tests that an error is displayed if the user enters an incorrect current password
+    """
+    def test_bad_old_password(self):
+        create_and_login_user(self)
+
+        password_data = {'old_password': 'random', 'new_password1': 'new_password', 'new_password2': 'new_password'}
+
+        request = self.client.post(reverse('eventastic:account'), data=password_data)
+        content = request.content.decode('utf-8')
+
+        self.assertTrue('<ul class="errorlist">' in content)
+
+    """
+    Tests that an error is displayed if the user enters an two non matching values for the new password fields
+    """
+    def test_non_matching_new_passwords(self):
+        create_and_login_user(self)
+
+        password_data = {'old_password': 'test123', 'new_password1': 'new_password', 'new_password2': 'random'}
+
+        request = self.client.post(reverse('eventastic:account'), data=password_data)
+        content = request.content.decode('utf-8')
+
+        self.assertTrue('<ul class="errorlist">' in content)
+
+    """
+    Tests that the user's password is successfully changed when good data is submitted
+    """
+    def test_good_password_change(self):
+        create_and_login_user(self)
+
+        password_data = {'old_password': 'test123', 'new_password1': 'new_password', 'new_password2': 'new_password'}
+
+        request = self.client.post(reverse('eventastic:account'), data=password_data)
+
+        self.assertEqual(request.status_code, 302)
+
+        login_data = {'username': 'testuser', 'password': 'new_password'}
+        request = self.client.post(reverse('eventastic:login'), data=login_data)
+        content = request.content.decode('utf-8')
+
+        self.assertTrue(not '<ul class="errorlist">' in content)
+
+    """
+    Tests that an error is displayed if the user submits a new password that is too short
+    """
+    def test_too_short_new_passwords(self):
+        create_and_login_user(self)
+
+        password_data = {'old_password': 'test123', 'new_password1': 'a', 'new_password2': 'a'}
+
+        request = self.client.post(reverse('eventastic:account'), data=password_data)
+        content = request.content.decode('utf-8')
+
+        self.assertTrue('<ul class="errorlist">' in content)
+
+    """
+    Tests that an error is displayed if the user submits a new password that is all numeric
+    """
+    def test_all_numeric_new_password(self):
+        create_and_login_user(self)
+
+        password_data = {'old_password': 'test123', 'new_password1': '123456789', 'new_password2': '123456789'}
+
+        request = self.client.post(reverse('eventastic:account'), data=password_data)
+        content = request.content.decode('utf-8')
+
+        self.assertTrue('<ul class="errorlist">' in content)
+
+"""
+Tests the form that deletes a user account
+"""
+class DeleteAccountTests(TestCase):
+    """
+    Tests that an error is displayed if the user submits an empty form
+    """
+    def test_empty_password(self):
+        create_and_login_user(self)
+
+        delete_data = {'password': ''}
+
+        request = self.client.post(reverse('eventastic:delete_account'), data=delete_data)
+        content = request.content.decode('utf-8')
+
+        self.assertTrue("Password is incorrect" in content)
+
+    """
+    Tests that the user's account is successfully deleted if good data is submitted
+    """
+    def test_good_delete(self):
+        create_and_login_user(self)
+
+        delete_data = {'password': 'test123'}
+
+        request = self.client.post(reverse('eventastic:delete_account'), data=delete_data)
+
+        self.assertTrue(not User.objects.filter(username="testuser").exists())
+
+    """
+    Tests that an error is displayed if the user submits an incorrect password for their account
+    """
+    def test_bad_password(self):
+        create_and_login_user(self)
+
+        delete_data = {'password': 'random'}
+
+        request = self.client.post(reverse('eventastic:delete_account'), data=delete_data)
+        content = request.content.decode('utf-8')
+
+        self.assertTrue("Password is incorrect" in content)
+
+"""
+Tests the form that adds comments to an event
+"""
+class AddCommentTests(TestCase):
+    """
+    Tests that an error is displayed if the user submits an empty form
+    """
+    def test_empty_content(self):
+        create_and_login_user(self)
+
+        user = User.objects.get(username="testuser")
+        user_profile = eventastic.models.UserProfile.objects.get(user=user)
+        event = create_event_object()
+
+        comment_data = {'eventName': event, 'username': user_profile, 'comment': ''}
+
+        request = self.client.post(reverse('eventastic:show_event', kwargs={'event_name_slug': event.slug, 'category_name_slug': event.category.slug}), data=comment_data)
+        content = request.content.decode('utf-8')
+
+        self.assertTrue('<ul class="errorlist">' in content)
+
+    """
+    Tests that if good data is submitted then the comment is created
+    """
+    def test_good_comment(self):
+        create_and_login_user(self)
+
+        user = User.objects.get(username="testuser")
+        user_profile = eventastic.models.UserProfile.objects.get(user=user)
+        event = create_event_object()
+
+        total_comments = eventastic.models.Comment.objects.all().count()
+
+        comment_data = {'eventName': event, 'username': user_profile, 'comment': 'looks good'}
+
+        request = self.client.post(reverse('eventastic:show_event', kwargs={'event_name_slug': event.slug, 'category_name_slug': event.category.slug}), data=comment_data)
+
+        self.assertEqual(eventastic.models.Comment.objects.all().count(), total_comments+1)
+
+    """
+    Tests that a non-logged in user cannot create a comment and is instead redirected to the login page
+    """
+    def test_non_logged_in_comment_attempt(self):
+        user_data = {'username': 'testuser', 'first_name': 'test', 'last_name': 'user', 'email': 'test@test.com', 'password': 'test123', 'confirm_password': 'test123'}
+        user_profile_data = {'DOB': '1995-01-01', 'profilePicture': tempfile.NamedTemporaryFile(suffix=".jpg").name}
+        data = {**user_data, **user_profile_data}
+        self.client.post(reverse('eventastic:register'), data=data)
+
+        self.client.post(reverse('eventastic:logout'), data={'username': 'testuser', 'password': 'test123'})
+
+        user = User.objects.get(username="testuser")
+        user_profile = eventastic.models.UserProfile.objects.get(user=user)
+        event = create_event_object()
+
+        total_comments = eventastic.models.Comment.objects.all().count()
+
+        comment_data = {'eventName': event, 'username': user_profile, 'comment': 'looks good'}
+
+        request = self.client.post(reverse('eventastic:show_event', kwargs={'event_name_slug': event.slug, 'category_name_slug': event.category.slug}), data=comment_data)
+
+        self.assertEqual(eventastic.models.Comment.objects.all().count(), total_comments)
+        self.assertEqual(request.status_code, 302)

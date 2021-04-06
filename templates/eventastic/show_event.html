@@ -5,13 +5,16 @@
     {{ event.name }}
 {% endblock %}
 
+<!-- Displays the details about a specific event -->
 {% block body_block %}
     <div>
         <!-- Inline styling so context can be used to display event picture as background picture -->
         <div id="set-event-dimensions" class="p-5 text-center bg-light page-header d-inline-block" style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{ event.picture.url }});">
             <h1 class="mb-3 text-white">{{ event.name }}</h1>
             <h4 class="mb-3 text-white stop-overflow"><p>{{ event.description }}</p></h4>
+            <!-- If the user is logged in then allow them to be interested in the event -->
             {% if user.is_authenticated %}
+                <!-- Inline Styling is used here to override the bootstrap defaults using classes and ids and even !important was tried but only inline styling gave desired output -->
                 <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" value="{{ event.name }}" url="{% url 'eventastic:interest' %}" {% if is_interested %} style="background-color:white; color:black" {% endif %} type="button">
                   {% if is_interested %}
                     Interested
@@ -19,6 +22,7 @@
                     Register Interest
                   {% endif %}
                 </button>
+            <!-- If the user is not logged in then the interest button will redirect them to the login page -->
             {% else %}
                 <button id="interest-button" class="btn btn-outline-light btn-lg mb-3" onclick="document.location='{% url 'eventastic:login' %}'" type="button">
                   Register Interest
@@ -37,8 +41,10 @@
         <div id='map' class="d-inline-block"></div>
     </div>
 
+    <!-- Comments Section -->
     <div class="mt-5">
         <h1 class="fw-bold">Comments</h1>
+        <!-- Add a comment form -->
         <form id="set-event-dimensions" method="post" action="{% url 'eventastic:show_event' event.category.slug event.slug %}" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
@@ -46,6 +52,7 @@
             <input class="btn button-custom px-3 m-1 border-1 border-dark" type="submit" name="submit" value="Add Comment"/>
         </form>
         <hr />
+        <!-- Display all the comments received for the event -->
         <div class="row">
             <div class="col-sm-5 col-md-6 col-12 pb-4">
                 {% for comment in comments %}

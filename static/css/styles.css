@@ -1,33 +1,59 @@
+/*
+Set the font and the default sizing for the webpage
+*/
 body {
     position: relative;
     min-height: 100vh;
     font-family: 'Roboto', sans-serif;
 }
 
+/*
+Set the default page background colour
+*/
 html, body, .set-background {
   background-color: #efefef;
 }
 
+/*
+Set the header background colour
+*/
 header {
   background-color: #baecf2
 }
 
+/*
+Stops words from overflowing a container
+Useful for the description on the cards and on the show_event.html page
+*/
 .stop-overflow {
   word-wrap: break-word;
 }
 
+/*
+Set background with secondary colour
+Used for the nav bar and footer sections
+*/
 .set-secondary-background {
   background-color: #a9a9a9;
 }
 
+/*
+Set styles for the header image
+*/
 .header-image {
   height: 7rem;
 }
 
+/*
+Styles the container holding the user profile picture and username
+*/
 .header-container {
   float: right;
 }
 
+/*
+Styles the links in the lists on the main pages
+*/
 a.list:link {
   color: #181818;
   background-color: transparent;
@@ -46,6 +72,9 @@ a.list:hover {
   text-decoration: underline;
 }
 
+/*
+Styles links that appear around the main page i.e. sidebar lists, navbar, link to the account
+*/
 a.sidebar-list:link {
   color: #696969;
   background-color: transparent;
@@ -64,17 +93,18 @@ a.sidebar-list:hover {
   text-decoration: underline;
 }
 
+/*
+Remove bullet points on a list
+*/
 .remove-bullets {
   list-style-type: none;
 }
 
-.home-container {
-    display: table-cell;
-    padding: 1rem;
-    height: auto;
-    vertical-align: top;
-}
-
+/*
+Media Query
+If the screen is large (laptop or desktop)
+Display the sidebar and adjust the main page accordingly
+*/
 @media (min-width:1025px) {
   .body-block {
     margin-left: 23rem;
@@ -90,6 +120,11 @@ a.sidebar-list:hover {
   }
 }
 
+/*
+Media Query
+If the screen is small or medium (tablet or mobile)
+Hide the sidebar and only display the main content
+*/
 @media (max-width:1025px) {
   .body-block {
     margin-left: 1rem;
@@ -102,6 +137,9 @@ a.sidebar-list:hover {
   }
 }
 
+/*
+Styles the footer for each page
+*/
 #footer {
     position: fixed;
     left: 0;
@@ -112,20 +150,32 @@ a.sidebar-list:hover {
     z-index: 99;
 }
 
+/*
+Styles the map on the show_event.html page
+*/
 #map {
   width: 30rem;
   height: 21rem;
   vertical-align: top;
 }
 
+/*
+Create a custom background for button
+*/
 .button-custom {
     background-color: #caebf2;
 }
 
+/*
+Change the colour when this custom button is hovered
+*/
 .button-custom:hover {
     background-color: #89e4f9;
 }
 
+/*
+Stylng for the comment containers on show_event.html
+*/
 .comment {
     border: 1px solid rgba(16, 46, 46, 1);
     background-color: #caebf2;
@@ -135,12 +185,13 @@ a.sidebar-list:hover {
     padding-top: 10px
 }
 
-.comment h4,
-.comment span,
-.darker span {
+.comment h4, .comment span, .darker span {
     display: inline
 }
 
+/*
+Styling for the marker displayed on the map
+*/
 .marker {
     background-image: url("../images/mapbox-icon.png");
     background-size: cover;
@@ -150,24 +201,40 @@ a.sidebar-list:hover {
     cursor: pointer;
 }
 
+/*
+Set the dimensions for the event page header
+*/
 #set-event-dimensions {
     width: 65%;
     height: auto;
 }
 
+/*
+Set the dimensions for the category page header
+*/
 #set-category-dimensions {
     width: 100%;
     height: 15rem;
 }
 
+/*
+Wrapper class for base.html to ensure the footer is not overlapped with page content
+*/
 .wrapper {
   padding-bottom:6rem;
 }
 
+/*
+Makes sure the aspect ratio isn't changed for the picture headers on the category page
+and event page when the page is resized
+*/
 .page-header {
     object-fit: cover;
 }
 
+/*
+Styling for the contact us page
+*/
 .contact-title {
     font-size: 2rem;
     margin: 2rem 0;

@@ -18,7 +18,7 @@ Map API
 https://www.mapbox.com
 https://pypi.org/project/geopy/
 
-Help with setting up PythonAnywhere and queues about AJAX
+Help with setting up PythonAnywhere and queries about AJAX
 Tango with Django Glasgow University Edition Book (URL unavailable as it is a protected source but is available via Moodle)
 
 Help with the custom template tags

@@ -190,9 +190,9 @@ def create_category(request):
             # Redirect the user to the page for that category using the slug
             return redirect('eventastic:show_category', category_name_slug=category_name_slug)
 
-        # If the form information is not valid display the errors
+        # If the form information is not valid display an error
         else:
-            messages.error(request, form.errors)
+            messages.error(request, "Form is invalid")
 
     # Define the form that needs to be displayed onscreen
     form = CategoryForm()

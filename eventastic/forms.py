@@ -34,7 +34,17 @@ class UserForm(forms.ModelForm):
 
         if password != confirm_password:
             raise forms.ValidationError(
-                "password and confirm_password does not match"
+                "password and confirm password fields do not match"
+            )
+
+        elif len(password) < 8:
+            raise forms.ValidationError(
+                "password is too short"
+            )
+
+        elif (password.isdecimal()):
+            raise forms.ValidationError(
+                "password cannot only contain numbers"
             )
 
 

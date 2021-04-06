@@ -723,6 +723,17 @@ Tests the form that creates a new event
 """
 class EventFormTests(TestCase):
     """
+    Tests that an error is displayed if an empty form is submitted
+    """
+    def test_empty_event_form(self):
+        create_and_login_user(self)
+
+        request = self.client.post(reverse('eventastic:create_event'))
+        content = request.content.decode('utf-8')
+
+        self.assertTrue('<ul class="errorlist">' in content)
+
+    """
     Tests that a category is created when good data is submitted
     """
     def test_good_event_form(self):
